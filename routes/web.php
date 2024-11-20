@@ -49,8 +49,17 @@ Route::get('/pendaftaran', function () {
     return view('pendaftaran', compact('dataKelas'), ['title' => 'PENDAFTARAN']);
 });
 
+Route::get('/pendaftaran_', function () {
+    session()->forget('data'); // Hapus session 'data'
+    return redirect('/pendaftaran');
+});
+
+Route::get('/tes', function () {
+    return view('formdaftar');
+});
+
 Route::get('/cek_spp', function () {
-    return view('check' , ['title' => 'CEK STATUS SPP']);
+    return view('check', ['title' => 'CEK STATUS SPP']);
 });
 
 Route::get('/cek_kelas', function () {
@@ -58,6 +67,8 @@ Route::get('/cek_kelas', function () {
 });
 
 Route::post('/daftar', [SantriController::class, 'daftar']);
+
+Route::get('/unduh-formulir', [SantriController::class, 'unduhFormulir'])->name('unduh-formulir');
 
 Route::get('/status_spp', [SantriController::class, 'cek']);
 

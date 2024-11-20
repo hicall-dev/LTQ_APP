@@ -8,162 +8,238 @@
     <div id="pendaftaran" class="my-10">
         <h1 class="text-3xl font-bold text-center tracking-widest py-5 border-b-4 border-blue-500">
             PENDAFTARAN</h1>
-        <form action="/daftar" method="POST" enctype="multipart/form-data" class="max-w-xl mx-auto space-y-6 ">
-            @csrf
 
-            <!-- Bagian Santri -->
-            <h2 class="text-xl font-semibold text-gray-700">Data Santri
-                <span class="align-top text-xs font-semibold text-gray-700">*Santri yang didaftarkan</span>
-            </h2>
+        @if (session()->has('data'))
+            <div class="flex justify-center items-center">
+                <div class=" w-4/5  px-5 py-5 rounded-lg shadow-md">
+                    <h1
+                        class=" mb-1 w-full text-center text-3xl tracking-wide font-bold text-white bg-blue-500 px-2 py-2 rounded-lg shadow-inner">
+                        Prosedur Setelah Pendfataran</h1>
+                    <ul class="p-3 space-y-3 list-disc list-inside text-lg text-justify">
+                        <p class="font-bold">1. Unduh Formulir</p>
+                        <li>Unduh file formulir pendaftaran yang telah diisi sebelumnya pada tombol dibawah</li>
+                        <li>
+                            <a href="/unduh-formulir"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                Unduh Formulir
+                            </a>
+                        </li>
+                        <li>Jika ada bagian yang belum diisi, lengkapi formulir tersebut, termasuk menambahkan tanda
+                            tangan.
+                        </li>
+                        <p class="font-bold">2. Lakukan Pembayaran</p>
+                        <li>Bayar uang pendaftaran dan SPP bulan pertama berdasarkan Jadwal yang telah dipilih
+                            sebelumnya
+                        </li>
+                        <li>Jumlah Pembayaran yang harus dibayarkan dapat dilihat pada <a
+                                href="{{ asset('download/Informasi_Lembaga.pdf') }}"
+                                class=" text-blue-500 underline">Informasi Lembaga</a></li>
+                        <li>Pembayaran secara Tunai dapat dilakukan Langsung di gedung lembaga.</li>
+                        <li>Pembayaran secara Non-tunai melalui transfer ke rekening berikut :</li>
+                        <li>
+                            <span class=" py-2 px-3 rounded-md font-bold text-white bg-blue-500 w-fit"> Rekening BSI :
+                                7117245448 a.n
+                                Fahmi Ramdani</span>
+                        </li>
+                        <p class="font-bold">Kirimkan Dokumen untuk Konfirmasi</p>
+                        <li>Kirimkan formulir pendaftaran yang telah diisi lengkap beserta bukti pembayaran (jika
+                            non-tunai)
+                            ke nomor WhatsApp lembaga untuk keperluan konfirmasi.
+                        </li>
+                        <li>
+                            <a href="https://wa.me/6289679479654" target="_blank"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                089679479654
+                            </a>
+                        </li>
+                    </ul>
+                    <br>
 
-            <div class="flex items-center space-x-4">
-                <label for="nama_santri" class="w-1/3 text-gray-700 font-semibold">Nama</label>
-                <input type="text" id="nama_santri" name="nama_santri" value="{{ old('nama_santri') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label class="text-gray-700 font-semibold w-1/3">Jenis Kelamin</label>
-                <div class="flex items-center space-x-6 w-2/3">
-                    <div>
-                        <input type="radio" id="laki_laki" name="jenis_kelamin" value="Laki-laki"
-                            class="text-blue-600 focus:ring-blue-200" onclick="toggleKelas()">
-                        <label for="laki_laki" class="text-gray-700">Laki-laki</label>
-                    </div>
-                    <div>
-                        <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan"
-                            class="text-pink-600 focus:ring-pink-200" onclick="toggleKelas()">
-                        <label for="perempuan" class="text-gray-700">Perempuan</label>
-                    </div>
+                    <a href="/pendaftaran_"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center">Kembali</a>
                 </div>
             </div>
+        @else
+            <form action="/daftar" method="POST" enctype="multipart/form-data" class="max-w-xl mx-auto space-y-6 ">
+                @csrf
 
+                <!-- Bagian Santri -->
+                <h2 class="text-xl font-semibold text-gray-700">Data Santri
+                    <span class="align-top text-xs font-semibold text-gray-700">*Calon Santri yang didaftarkan</span>
+                </h2>
 
-            <div class="flex items-center space-x-4">
-                <label for="nama_ayah" class="w-1/3 text-gray-700 font-semibold">Nama Ayah Kandung</label>
-                <input type="text" id="nama_ayah" name="nama_ayah"
-                    value="{{ old('nama_ayah') }}"class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="ttl_santri" class="w-1/3 text-gray-700 font-semibold">Tempat Tanggal Lahir</label>
-                <input type="text" id="ttl_santri" name="ttl_santri"
-                    value="{{ old('ttl_santri') }}"class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="alamat_santri" class="w-1/3 text-gray-700 font-semibold">Alamat</label>
-                <input type="text" id="alamat_santri" name="alamat_santri" value="{{ old('alamat_santri') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="wa_santri" class="w-1/3 text-gray-700 font-semibold">No. WhatsApp</label>
-                <input type="text" id="wa_santri" name="wa_santri" value="{{ old('wa_santri') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="asal_sekolah" class="w-1/3 text-gray-700 font-semibold">Asal Sekolah</label>
-                <input type="text" id="asal_sekolah" name="asal_sekolah" value="{{ old('asal_sekolah') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <br>
-            <hr class="border-t border-blue-500 my-8">
-
-            <!-- Bagian Wali Santri -->
-            <h2 class="text-xl font-semibold text-gray-700 mt-8">Data Wali Santri
-                <span class="align-top text-xs font-semibold text-gray-700">*Orang yang mendaftarkan</span>
-            </h2>
-
-            <div class="flex items-center space-x-4">
-                <label for="nama_wali" class="w-1/3 text-gray-700 font-semibold">Nama</label>
-                <input type="text" id="nama_wali" name="nama_wali" value="{{ old('nama_wali') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="ttl_wali" class="w-1/3 text-gray-700 font-semibold">Tempat Tanggal Lahir</label>
-                <input type="text" id="ttl_wali" name="ttl_wali" value="{{ old('ttl_wali') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="alamat_wali" class="w-1/3 text-gray-700 font-semibold">Alamat</label>
-                <input type="text" id="alamat_wali" name="alamat_wali" value="{{ old('alamat_wali') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <div class="flex items-center space-x-4">
-                <label for="wa_wali" class="w-1/3 text-gray-700 font-semibold">No. WhatsApp</label>
-                <input type="text" id="wa_wali" name="wa_wali" value="{{ old('wa_wali') }}"
-                    class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
-            </div>
-
-            <!-- Bagian Santri -->
-            <br>
-            <hr class="border-t border-blue-500 my-8">
-            <h2 class=" text-xs font-semibold text-gray-700">*Jadwal Kelas akan muncul ketika Jenis Kelamin telah diisi
-            </h2>
-            <h2 class="text-xl font-semibold text-gray-700">Jadwal Kelas</h2>
-
-            <div id="kelas_laki_laki" class="hidden">
                 <div class="flex items-center space-x-4">
-                    <label class="text-gray-700 font-semibold w-1/3">Pilih Waktu</label>
+                    <label for="nama_santri" class="w-1/3 text-gray-700 font-semibold">Nama</label>
+                    <input type="text" id="nama_santri" name="nama_santri" value="{{ old('nama_santri') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label class="text-gray-700 font-semibold w-1/3">Jenis Kelamin</label>
                     <div class="flex items-center space-x-6 w-2/3">
                         <div>
-                            <input type="radio" id="kelas_sore" name="kelas" value="Putra Sore"
-                                class="text-blue-600 focus:ring-blue-200">
-                            <label for="kelas_sore" class="text-gray-700">Putra Sore</label>
+                            <input type="radio" id="laki_laki" name="jenis_kelamin" value="Laki-laki"
+                                class="text-blue-600 focus:ring-blue-200" onclick="toggleKelas()">
+                            <label for="laki_laki" class="text-gray-700">Laki-laki</label>
                         </div>
                         <div>
-                            <input type="radio" id="kelas_malam" name="kelas" value="Putra Malam"
-                                class="text-blue-600 focus:ring-blue-200">
-                            <label for="kelas_malam" class="text-gray-700">Putra Malam</label>
+                            <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan"
+                                class="text-pink-600 focus:ring-pink-200" onclick="toggleKelas()">
+                            <label for="perempuan" class="text-gray-700">Perempuan</label>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="kelas_perempuan" class="hidden">
+
                 <div class="flex items-center space-x-4">
-                    <label class="text-gray-700 font-semibold w-1/3">Pilih Kelas</label>
-                    <div class="flex items-center space-x-6 w-2/3">
-                        <div>
-                            <input type="radio" id="kelas_pagi" name="kelas" value="Putri Pagi"
-                                class="text-pink-600 focus:ring-pink-200">
-                            <label for="kelas_pagi" class="text-gray-700">Putri Pagi</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="kelas_ahad" name="kelas" value="Putri Ahad"
-                                class="text-pink-600 focus:ring-pink-200">
-                            <label for="kelas_ahad" class="text-gray-700">Putri Ahad</label>
+                    <label for="nama_ayah" class="w-1/3 text-gray-700 font-semibold">Nama Ayah Kandung</label>
+                    <input type="text" id="nama_ayah" name="nama_ayah"
+                        value="{{ old('nama_ayah') }}"class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="ttl_santri" class="w-1/3 text-gray-700 font-semibold">Tempat Tanggal Lahir</label>
+                    <input type="text" id="ttl_santri" name="ttl_santri"
+                        value="{{ old('ttl_santri') }}"class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="alamat_santri" class="w-1/3 text-gray-700 font-semibold">Alamat</label>
+                    <input type="text" id="alamat_santri" name="alamat_santri" value="{{ old('alamat_santri') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="wa_santri" class="w-1/3 text-gray-700 font-semibold">No. WhatsApp</label>
+                    <input type="text" id="wa_santri" name="wa_santri" value="{{ old('wa_santri') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="asal_sekolah" class="w-1/3 text-gray-700 font-semibold">Asal Sekolah</label>
+                    <input type="text" id="asal_sekolah" name="asal_sekolah" value="{{ old('asal_sekolah') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <br>
+                <hr class="border-t border-blue-500 my-8">
+
+                <!-- Bagian Wali Santri -->
+                <h2 class="text-xl font-semibold text-gray-700 mt-8">Data Wali Santri
+                    <span class="align-top text-xs font-semibold text-gray-700">*Orang yang mendaftarkan</span>
+                </h2>
+
+                <div class="flex items-center space-x-4">
+                    <label for="nama_wali" class="w-1/3 text-gray-700 font-semibold">Nama</label>
+                    <input type="text" id="nama_wali" name="nama_wali" value="{{ old('nama_wali') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="ttl_wali" class="w-1/3 text-gray-700 font-semibold">Tempat Tanggal Lahir</label>
+                    <input type="text" id="ttl_wali" name="ttl_wali" value="{{ old('ttl_wali') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="alamat_wali" class="w-1/3 text-gray-700 font-semibold">Alamat</label>
+                    <input type="text" id="alamat_wali" name="alamat_wali" value="{{ old('alamat_wali') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <label for="wa_wali" class="w-1/3 text-gray-700 font-semibold">No. WhatsApp</label>
+                    <input type="text" id="wa_wali" name="wa_wali" value="{{ old('wa_wali') }}"
+                        class="w-2/3 px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-200">
+                </div>
+
+                <!-- Bagian Santri -->
+                <br>
+                <hr class="border-t border-blue-500 my-8">
+                <h2 class=" text-xs font-semibold text-gray-700">*Jadwal Kelas akan muncul ketika Jenis Kelamin telah
+                    diisi
+                </h2>
+                <h2 class="text-xl font-semibold text-gray-700">Jadwal Kelas</h2>
+
+                <div id="kelas_laki_laki" class="hidden">
+                    <div class="flex items-center space-x-4">
+                        <label class="text-gray-700 font-semibold w-1/3">Pilih Waktu</label>
+                        <div class="flex items-center space-x-6 w-2/3">
+                            <div>
+                                <input type="radio" id="kelas_sore" name="kelas" value="Putra Sore"
+                                    class="text-blue-600 focus:ring-blue-200">
+                                <label for="kelas_sore" class="text-gray-700">Putra Sore</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="kelas_malam" name="kelas" value="Putra Malam"
+                                    class="text-blue-600 focus:ring-blue-200">
+                                <label for="kelas_malam" class="text-gray-700">Putra Malam</label>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="mb-6">
-                <label for="signature" class="block text-gray-700 font-semibold mb-2">Tanda Tangan</label>
-                <canvas id="signature" width="300" height="200" class="border-2 border-gray-400"></canvas>
-                <input type="hidden" id="signature_data" name="signature_data">
-            </div>
+                <div id="kelas_perempuan" class="hidden">
+                    <div class="flex items-center space-x-4">
+                        <label class="text-gray-700 font-semibold w-1/3">Pilih Kelas</label>
+                        <div class="flex items-center space-x-6 w-2/3">
+                            <div>
+                                <input type="radio" id="kelas_pagi" name="kelas" value="Putri Pagi"
+                                    class="text-pink-600 focus:ring-pink-200">
+                                <label for="kelas_pagi" class="text-gray-700">Putri Sore</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="kelas_ahad" name="kelas" value="Putri Ahad"
+                                    class="text-pink-600 focus:ring-pink-200">
+                                <label for="kelas_ahad" class="text-gray-700">Putri Pagi</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <div class="mb-6">
-                <button type="button" id="clear" class="bg-gray-300 p-2 rounded-md">Clear</button>
-            </div>
+                <div class="mb-6">
+                    <label for="signature" class="block mb-2 text-xl font-semibold text-gray-700">Tanda Tangan</label>
+                    <canvas id="signature" width="300" height="200" class="border-2 border-gray-400"></canvas>
+                    <input type="hidden" id="signature_data" name="signature_data">
+                </div>
 
-            <!-- Tombol Submit -->
-            <div class="flex justify-end">
-                <button type="submit"
-                    class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200">
-                    Daftar
-                </button>
-            </div>
-        </form>
+                <div class="mb-6">
+                    <button type="button" id="clear" class="bg-gray-300 p-2 rounded-md">Reset</button>
+                </div>
+
+                <!-- Tombol Submit -->
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200">
+                        Daftar
+                    </button>
+                </div>
+                <input type="hidden" id="base64Image" name="base64Image">
+            </form>
+        @endif
+
     </div>
+
     <script>
+        // Mengambil gambar dari asset
+        fetch("{{ asset('img/logo.png') }}")
+            .then(response => response.blob()) // Mengambil gambar sebagai blob
+            .then(blob => {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    // Base64 hasil konversi
+                    const base64Image = reader.result;
+
+                    // Menyimpan Base64 dalam input hidden
+                    document.getElementById('base64Image').value = base64Image;
+
+                }
+                reader.readAsDataURL(blob); // Membaca blob menjadi Base64
+            })
+            .catch(error => {
+                console.error('Error fetching image:', error);
+            });
+
         function toggleKelas() {
             // Menyembunyikan semua pilihan kelas terlebih dahulu
             document.getElementById("kelas_laki_laki").classList.add("hidden");
@@ -194,11 +270,18 @@
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('touchend', stopDrawing);
 
+        // Tingkatkan resolusi kanvas
+
+        ctx.lineJoin = 'round';
+        ctx.lineCap = 'round';
+
         // Atur ketebalan garis
         ctx.lineWidth = 5; // Anda bisa mengganti angka ini dengan ketebalan yang diinginkan
 
         // Atur warna garis jika diperlukan
         ctx.strokeStyle = "#000"; // Warna hitam, bisa diganti dengan warna lain
+
+
 
         // Mulai menggambar
         function startDrawing(e) {
@@ -288,6 +371,17 @@
                 document.getElementById('signature_data').value = '';
             }
         };
+
+        // Mengirimkan data form sebelum submit
+        document.getElementById('daftarForm').addEventListener('submit', function(event) {
+            // Dapatkan nilai Base64 (akan diperbarui otomatis sebelum submit)
+            const base64Image = document.getElementById('base64Image').value;
+
+            // Anda dapat melakukan validasi atau manipulasi data lainnya sebelum form disubmit
+            console.log('Base64 Image:', base64Image);
+
+            // Jika perlu, Anda bisa menambah proses lain sebelum form dikirim, misalnya validasi.
+        });
     </script>
 
 

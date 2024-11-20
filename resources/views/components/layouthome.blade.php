@@ -10,7 +10,7 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
     {{-- <title>HOME</title> --}}
-    
+
 </head>
 
 <x-navbarhome></x-navbarhome>
@@ -19,7 +19,15 @@
     <div class="min-h-full">
         <main>
             {{-- BANNER --}}
-            <div class="py-10 "
+            <picture class="">
+                <source media="(min-width: 768px)" srcset="{{ asset('img/banner2.jpg') }}">
+                {{-- <source media="(min-width: 960px)" srcset="{{ asset('img/banner3.png') }}"> --}}
+                <img src="{{ asset('img/banner.jpg') }}" alt="">
+            </picture>
+            {{-- <div class="">
+                <img src="{{ asset('img/channels4_banner.jpg') }}" alt="">
+            </div> --}}
+            {{-- <div class="py-10 "
                 style="background-image: url('{{ asset('/img/pic_1.jpg') }}'); background-size: cover; background-position: center;">
                 <div class="grid grid-cols-1 gap-x-6 gap-y-8 ">
                     <div class="flex justify-center items-center md:flex-row flex-col bg-cyan-400/50">
@@ -41,8 +49,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="mx-auto max-w-7xl px-4 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
+            </div> --}}
+            <div class="mx-auto h-full max-w-7xl px-4 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
                 {{ $slot }}
             </div>
         </main>

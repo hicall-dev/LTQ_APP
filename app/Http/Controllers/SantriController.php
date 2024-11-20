@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Santri;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,25 +35,62 @@ class SantriController extends Controller
         // dd($request);
         // Validasi input
         $validatedData = $request->validate([
-            'nama_santri' => 'required',
-            'jenis_kelamin' => 'required',
-            'nama_ayah' => 'required',
-            'ttl_santri' => 'required',
-            'alamat_santri' => 'required',
-            'wa_santri' => 'required',
-            'asal_sekolah' => 'required',
-            'nama_wali' => 'required',
-            'ttl_wali' => 'required',
-            'alamat_wali' => 'required',
-            'wa_wali' => 'required',
-            'kelas' => 'required',
+            'nama_santri' => 'nullable',
+            'jenis_kelamin' => 'nullable',
+            'nama_ayah' => 'nullable',
+            'ttl_santri' => 'nullable',
+            'alamat_santri' => 'nullable',
+            'wa_santri' => 'nullable',
+            'asal_sekolah' => 'nullable',
+            'nama_wali' => 'nullable',
+            'ttl_wali' => 'nullable',
+            'alamat_wali' => 'nullable',
+            'wa_wali' => 'nullable',
+            'kelas' => 'nullable',
             'signature_data' => 'nullable', // Validasi untuk tanda tangan
+            'base64Image' => 'nullable'
         ]);
 
+        session(['data' => $validatedData]);
+        // dd(session('data'));
+
         // Kirim data ke view
-        return view('formdaftar', [
-            'data' => $validatedData
-        ]);
+        // return view('formdaftar', [
+        //     'data' => $validatedData
+        // ]);
+        return redirect()->back();
+    }
+
+
+    public function unduhFormulir()
+    {
+        // Ambil data dari session
+        $formData = session('data', []);
+
+        // Buat PDF menggunakan DomPDF
+        $pdf = PDF::loadView('formdaftar', ['data' => $formData]);
+
+        // Setel ukuran kertas A4 dan orientasi portrait
+        $pdf->setPaper('A4', 'portrait'); // Atau 'landscape'
+
+        // Set margin menjadi 0 (none)
+        $pdf->setOption('margin-top', 0);
+        $pdf->setOption('margin-right', 0);
+        $pdf->setOption('margin-bottom', 0);
+        $pdf->setOption('margin-left', 0);
+
+        // Set scale menjadi 100% (fit to page)
+        $pdf->setOption('scale', 1); // DomPDF secara default memiliki scale 1 yang berarti 100%
+
+        // Set pages per sheet menjadi 1 (ini untuk memastikan satu halaman per sheet)
+        $pdf->setOption('page-width', 210);  // Lebar A4 dalam mm
+        $pdf->setOption('page-height', 297); // Tinggi A4 dalam mm
+
+        // Hapus data session setelah digunakan
+        session()->flush();
+
+        // Unduh file PDF
+        return $pdf->download('Formulir_Pendaftaran.pdf');
     }
 
 
