@@ -197,4 +197,25 @@ class SantriController extends Controller
         // Mengirimkan pesan sukses
         return redirect('/dashboard/santri')->with('success', 'Status SPP berhasil direset.');
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Lokasi file yang akan diganti
+        $targetPath = public_path('img/popup.jpg');
+
+        // Hapus file popup.jpg jika ada
+        if (file_exists($targetPath)) {
+            unlink($targetPath);
+        }
+
+        // Simpan file yang diunggah sebagai popup.jpg
+        $request->image->move(public_path('img'), 'popup.jpg');
+
+        return back()->with('success', 'Image uploaded successfully.');
+    }
+
 }

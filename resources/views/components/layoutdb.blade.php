@@ -11,13 +11,14 @@
     <title>{{ $title }}</title>
 </head>
 
-<body class="h-full">
-    <div class="min-h-full">
-        <x-navbardb>{{ $title }}</x-navbardb>
-        <div class="mx-auto max-w-7xl px-4 pt-6 pb-32 sm:px-6 lg:px-8">
+<x-navbardb>{{ $title }}</x-navbardb>
+<body>
+    <div class="min-h-screen">
+        <div class="mx-auto max-w-7xl px-4 mt-10 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
             {{ $slot }}
         </div>
     </div>
+    <x-footerdb></x-footerdb>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
 

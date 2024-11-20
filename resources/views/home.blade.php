@@ -40,8 +40,8 @@
         </div>
     </div>
 
-
-    {{-- <div id="image-modal"
+    {{-- PROMO --}}
+    <div id="image-modal"
         class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-screen bg-black/50">
         <div class="relative">
             <!-- Tombol Close -->
@@ -60,7 +60,7 @@
             <!-- Gambar -->
             <img src="{{ asset('img/popup.jpg') }}" alt="Popup Image" class="rounded-lg shadow-lg max-w-lg w-full">
         </div>
-    </div> --}}
+    </div>
     <script>
         // Fungsi untuk menutup modal
         function closeModal() {
@@ -68,5 +68,4 @@
             modal.classList.add('hidden'); // Sembunyikan modal
         }
     </script>
-
 </x-layouthome>

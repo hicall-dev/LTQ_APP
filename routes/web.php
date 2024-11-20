@@ -54,10 +54,6 @@ Route::get('/pendaftaran_', function () {
     return redirect('/pendaftaran');
 });
 
-Route::get('/tes', function () {
-    return view('formdaftar');
-});
-
 Route::get('/cek_spp', function () {
     return view('check', ['title' => 'CEK STATUS SPP']);
 });
@@ -89,6 +85,12 @@ Route::get('/dashboard/reset', [SantriController::class, 'resetStatusSPP'])->nam
 Route::get('/dashboard', function () {
     return redirect('/dashboard/santri');
 });
+
+Route::get('/dashboard/promo', function () {
+    return view('promo', ['title' => 'Edit Promo']);
+})->middleware('auth');
+
+Route::post('/dashboard/promo', [SantriController::class, 'store'])->name('store')->middleware('auth');
 
 Route::resource('/dashboard/santri', DashboardSantriController::class)->middleware('auth');
 // Route::resource('/dashboard/santri/detail', [DashboardSantriController::class, 'edit'])->middleware('auth');

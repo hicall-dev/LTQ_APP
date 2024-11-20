@@ -16,48 +16,22 @@
 <x-navbarhome></x-navbarhome>
 
 <body class="bg-cyan-200">
-    <div class="min-h-full">
+    <div class=" min-h-screen">
         <main>
             {{-- BANNER --}}
             <picture class="">
                 <source media="(min-width: 768px)" srcset="{{ asset('img/banner2.jpg') }}">
-                {{-- <source media="(min-width: 960px)" srcset="{{ asset('img/banner3.png') }}"> --}}
-                <img src="{{ asset('img/banner.jpg') }}" alt="">
-            </picture>
-            {{-- <div class="">
-                <img src="{{ asset('img/channels4_banner.jpg') }}" alt="">
-            </div> --}}
-            {{-- <div class="py-10 "
-                style="background-image: url('{{ asset('/img/pic_1.jpg') }}'); background-size: cover; background-position: center;">
-                <div class="grid grid-cols-1 gap-x-6 gap-y-8 ">
-                    <div class="flex justify-center items-center md:flex-row flex-col bg-cyan-400/50">
-                        <div>
-                            <img src="{{ asset('/img/logo.png') }}" alt="" class="w-48 h-48 my-2">
-                        </div>
-                        <div class=" text-center text-white mx-5 px-5">
-                            <h1 class=" mb-1 lg:text-2xl text-xl tracking-wide font-bold ">LEMBAGA PENDIDIKAN
-                                TAHSIN &
-                                TAHFIZH ALQURAN
-                            </h1>
-                            <h1 class=" mb-1 lg:text-6xl text-3xl tracking-wide font-bold ">KHOIRUNNASYIEN
-                            </h1>
-                            <h1 class=" mb-1 text-sm italic tracking-wide font-bold ">Mencerdaskan tunas muda dengan
-                                Alquran
-                                &
-                                Membahagiakan keluarga
-                            </h1>
-                        </div>
-                    </div>
-                </div>
-            </div> --}}
-            <div class="mx-auto h-full max-w-7xl px-4 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
+                <img src="{{ asset('img/banner1.jpg') }}" alt="">
+                </picture>
+            <div class="mx-auto max-w-7xl px-4 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
                 {{ $slot }}
             </div>
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    
+    <x-footerhome></x-footerhome>
 </body>
 
-<x-footerhome></x-footerhome>
 
 </html>
