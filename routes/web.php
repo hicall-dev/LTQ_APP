@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/pendaftaran', function () {
-    $dataKelas = [
+$dataKelas = [
         [
             'nama' => 'Putra Sore',
             'waktu' => '15.00 - 17.30',
@@ -53,6 +53,11 @@ Route::get('/pendaftaran_', function () {
     session()->forget('data'); // Hapus session 'data'
     return redirect('/pendaftaran');
 });
+
+Route::get('/tes', function () {
+    return view('formdaftar');
+});
+
 
 Route::get('/cek_spp', function () {
     return view('check', ['title' => 'CEK STATUS SPP']);
@@ -115,6 +120,3 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::fallback(function () {
     return redirect('/');
 });
-// Route::get('/kontak', function () {
-//     return view('kontak');
-// });

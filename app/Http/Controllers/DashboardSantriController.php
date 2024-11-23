@@ -48,7 +48,7 @@ class DashboardSantriController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all(), auth('web')->user()->id);
+        dd($request->all(), auth('web')->user()->id);
         $validatedData = $request->validate([
             'nama' => 'required|max:255',
             'nis' => 'required|unique:santris',

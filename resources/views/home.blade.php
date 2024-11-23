@@ -58,7 +58,8 @@
 
 
             <!-- Gambar -->
-            <img src="{{ asset('img/popup.jpg') }}" alt="Popup Image" class="rounded-lg shadow-lg max-w-lg w-full">
+            <img src="{{ asset('img/popup.jpg') }}?v={{ time() }}" alt="Popup Image"
+                class="rounded-lg shadow-lg max-w-lg w-full">
         </div>
     </div>
     <script>

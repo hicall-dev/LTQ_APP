@@ -52,7 +52,7 @@
         <h1 class=" mb-1 text-5xl tracking-tight font-bold text-gray-900">{{ $judul }}</h1>
     </div>
 
-    <form action="/dashboard/santri/{{ isset($santri) ? $santri->nis : '' }}" method="POST">
+    <form action="/dashboard/santri{{ isset($santri) ? '/' . $santri->nis : '' }}" method="POST">
         @if (isset($santri))
             @method('put')
         @endif

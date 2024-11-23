@@ -62,7 +62,10 @@
                         </tr>
                         @if (Request::path() == 'status_spp')
                             <tr>
-                                <td>Status SPP</td>
+                                @php
+                                    $date = \Carbon\Carbon::now()->locale('id'); // Pastikan menambahkan namespace// Setel locale ke bahasa Indonesia
+                                @endphp
+                                <td>Status SPP {{ $date->translatedFormat('F') }}</td>
                                 <td class="px-1">:</td>
                                 <td>
                                     <div

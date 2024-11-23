@@ -8,14 +8,13 @@
     <div id="pendaftaran" class="my-10">
         <h1 class="text-3xl font-bold text-center tracking-widest py-5 border-b-4 border-blue-500">
             PENDAFTARAN</h1>
-
         @if (session()->has('data'))
             <div class="flex justify-center items-center">
                 <div class=" w-4/5  px-5 py-5 rounded-lg shadow-md">
                     <h1
                         class=" mb-1 w-full text-center text-3xl tracking-wide font-bold text-white bg-blue-500 px-2 py-2 rounded-lg shadow-inner">
                         Prosedur Setelah Pendfataran</h1>
-                    <ul class="p-3 space-y-3 list-disc list-inside text-lg text-justify">
+                    <ul class="p-3 space-y-3 list-disc list-inside text-lg ">
                         <p class="font-bold">1. Unduh Formulir</p>
                         <li>Unduh file formulir pendaftaran yang telah diisi sebelumnya pada tombol dibawah</li>
                         <li>
@@ -75,20 +74,17 @@
                 </div>
 
                 <div class="flex items-center space-x-4">
-                    <label class="text-gray-700 font-semibold w-1/3">Jenis Kelamin</label>
-                    <div class="flex items-center space-x-6 w-2/3">
-                        <div>
-                            <input type="radio" id="laki_laki" name="jenis_kelamin" value="Laki-laki"
-                                class="text-blue-600 focus:ring-blue-200" onclick="toggleKelas()">
-                            <label for="laki_laki" class="text-gray-700">Laki-laki</label>
-                        </div>
-                        <div>
-                            <input type="radio" id="perempuan" name="jenis_kelamin" value="Perempuan"
-                                class="text-pink-600 focus:ring-pink-200" onclick="toggleKelas()">
-                            <label for="perempuan" class="text-gray-700">Perempuan</label>
-                        </div>
+                    <label for="jenis_kelamin" class="text-gray-700 font-semibold w-1/3">Jenis Kelamin</label>
+                    <div class="w-2/3">
+                        <select id="jenis_kelamin" name="jenis_kelamin"
+                            class="block w-full rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                            <option value="" disabled selected>-</option>
+                            <option value="Laki-laki" class="text-blue-600">Laki-laki</option>
+                            <option value="Perempuan" class="text-pink-600">Perempuan</option>
+                        </select>
                     </div>
                 </div>
+
 
 
                 <div class="flex items-center space-x-4">
@@ -159,40 +155,33 @@
                 <h2 class=" text-xs font-semibold text-gray-700">*Jadwal Kelas akan muncul ketika Jenis Kelamin telah
                     diisi
                 </h2>
-                <h2 class="text-xl font-semibold text-gray-700">Jadwal Kelas</h2>
+                <h2 class="text-xl font-semibold text-gray-700">Jadwal Belajar</h2>
+                <div class="flex items-center space-x-4">
+                    <label class="text-gray-700 font-semibold w-1/3" for="kelas">Pilih Waktu Belajar</label>
+                    <div class=" items-center justify-center  w-2/3">
+                        <div>
+                            <select id="kelas" name="kelas"
+                                class="block w-full mt-1 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                                <option value="Putra Sore" class="text-blue-600">Putra Sore</option>
+                                <option value="Putra Malam" class="text-blue-600">Putra Malam</option>
+                                <option value="Putri Pagi" class="text-pink-600">Putri Pagi</option>
+                                <option value="Putri Ahad" class="text-pink-600">Putri Ahad</option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
 
                 <div id="kelas_laki_laki" class="hidden">
-                    <div class="flex items-center space-x-4">
-                        <label class="text-gray-700 font-semibold w-1/3">Pilih Waktu</label>
-                        <div class="flex items-center space-x-6 w-2/3">
-                            <div>
-                                <input type="radio" id="kelas_sore" name="kelas" value="Putra Sore"
-                                    class="text-blue-600 focus:ring-blue-200">
-                                <label for="kelas_sore" class="text-gray-700">Putra Sore</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="kelas_malam" name="kelas" value="Putra Malam"
-                                    class="text-blue-600 focus:ring-blue-200">
-                                <label for="kelas_malam" class="text-gray-700">Putra Malam</label>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div id="kelas_perempuan" class="hidden">
                     <div class="flex items-center space-x-4">
-                        <label class="text-gray-700 font-semibold w-1/3">Pilih Kelas</label>
+                        <label class="text-gray-700 font-semibold w-1/3">Pilih Waktu Belajar</label>
                         <div class="flex items-center space-x-6 w-2/3">
-                            <div>
-                                <input type="radio" id="kelas_pagi" name="kelas" value="Putri Pagi"
-                                    class="text-pink-600 focus:ring-pink-200">
-                                <label for="kelas_pagi" class="text-gray-700">Putri Sore</label>
-                            </div>
-                            <div>
-                                <input type="radio" id="kelas_ahad" name="kelas" value="Putri Ahad"
-                                    class="text-pink-600 focus:ring-pink-200">
-                                <label for="kelas_ahad" class="text-gray-700">Putri Pagi</label>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -214,32 +203,12 @@
                         Daftar
                     </button>
                 </div>
-                <input type="hidden" id="base64Image" name="base64Image">
             </form>
         @endif
 
     </div>
 
     <script>
-        // Mengambil gambar dari asset
-        fetch("{{ asset('img/logo.png') }}")
-            .then(response => response.blob()) // Mengambil gambar sebagai blob
-            .then(blob => {
-                const reader = new FileReader();
-                reader.onloadend = function() {
-                    // Base64 hasil konversi
-                    const base64Image = reader.result;
-
-                    // Menyimpan Base64 dalam input hidden
-                    document.getElementById('base64Image').value = base64Image;
-
-                }
-                reader.readAsDataURL(blob); // Membaca blob menjadi Base64
-            })
-            .catch(error => {
-                console.error('Error fetching image:', error);
-            });
-
         function toggleKelas() {
             // Menyembunyikan semua pilihan kelas terlebih dahulu
             document.getElementById("kelas_laki_laki").classList.add("hidden");
@@ -371,17 +340,6 @@
                 document.getElementById('signature_data').value = '';
             }
         };
-
-        // Mengirimkan data form sebelum submit
-        document.getElementById('daftarForm').addEventListener('submit', function(event) {
-            // Dapatkan nilai Base64 (akan diperbarui otomatis sebelum submit)
-            const base64Image = document.getElementById('base64Image').value;
-
-            // Anda dapat melakukan validasi atau manipulasi data lainnya sebelum form disubmit
-            console.log('Base64 Image:', base64Image);
-
-            // Jika perlu, Anda bisa menambah proses lain sebelum form dikirim, misalnya validasi.
-        });
     </script>
 
 

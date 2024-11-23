@@ -198,9 +198,7 @@
         <table>
             <tr>
                 <td>
-                    @if (isset($data['base64Image']))
-                        <img src="{{ $data['base64Image'] }}" width="80" height="80" alt="Logo">
-                    @endif
+                    <img src="{{ public_path('img/logo.png') }}" width="80" height="80" alt="">
                 </td>
                 <td>
                     <h2>LEMBAGA TAHSIN & TAHFIZH QURAN TERPADU KHOIRUNNASYIEN</h2>

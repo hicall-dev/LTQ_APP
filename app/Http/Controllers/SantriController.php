@@ -48,9 +48,15 @@ class SantriController extends Controller
             'wa_wali' => 'nullable',
             'kelas' => 'nullable',
             'signature_data' => 'nullable', // Validasi untuk tanda tangan
-            'base64Image' => 'nullable'
         ]);
-
+        // Ubah huruf pertama kata di semua field kecuali 'signature_data'
+        foreach ($validatedData as $key => $value) {
+            // Mengecek jika field bukan 'signature_data' dan ada nilai
+            if ($key !== 'signature_data' && !empty($value)) {
+                // Ubah menjadi huruf kapital di awal kata
+                $validatedData[$key] = ucwords(strtolower($value));
+            }
+        }
         session(['data' => $validatedData]);
         // dd(session('data'));
 
@@ -217,5 +223,25 @@ class SantriController extends Controller
 
         return back()->with('success', 'Image uploaded successfully.');
     }
+    
+    // public function store(Request $request)
+    // {
+    //     $request->validate([
+    //         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     // Tentukan path file target secara relatif ke folder aplikasi
+    //     $targetPath = base_path('../public_html/img/popup.jpg'); // Pastikan path ini sesuai dengan struktur server Anda
+
+    //     // Hapus file popup.jpg jika ada
+    //     if (file_exists($targetPath)) {
+    //         unlink($targetPath);
+    //     }
+
+    //     // Simpan file yang diunggah sebagai popup.jpg
+    //     $request->image->move(dirname($targetPath), 'popup.jpg');
+
+    //     return back()->with('success', 'Image uploaded successfully.');
+    // }
 
 }
