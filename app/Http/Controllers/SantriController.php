@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Santri;
+use App\Models\Payment;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -191,17 +192,45 @@ class SantriController extends Controller
 
     public function resetStatusSPP()
     {
-        // Mendapatkan ID operator saat ini
         $operatorId = Auth::id();
+        $now = now();
+        $bulan = $now->month;
+        $tahun = $now->year;
 
-        // Mengubah semua status_spp menjadi 0 dan menyetelnya dengan operator_id yang baru
-        Santri::query()->update([
-            'status_spp' => 0,
-            'operator_id' => $operatorId,
-        ]);
+        // Ambil semua santri yang status_spp-nya bukan gratis (2)
+        $santris = Santri::where('status_spp', '!=', 2)->get();
 
-        // Mengirimkan pesan sukses
-        return redirect('/dashboard/santri')->with('success', 'Status SPP berhasil direset.');
+        DB::beginTransaction();
+        try {
+            foreach ($santris as $santri) {
+                // Update status_spp di tabel santris
+                $santri->update([
+                    'status_spp' => 0,
+                    'operator_id' => $operatorId,
+                ]);
+                $santri->touch();
+                // Update atau buat data di tabel payments
+                $payment = Payment::updateOrCreate(
+                    [
+                        'santri_id' => $santri->id,
+                        'bulan'     => $bulan,
+                        'tahun'     => $tahun,
+                    ],
+                    [
+                        'status' => 0, // Belum lunas
+                        'operator_id' => auth('web')->user()->id
+                    ]
+                );
+                // Paksa update updated_at meskipun status tidak berubah
+                $payment->touch();
+            }
+
+            DB::commit();
+            return redirect('/dashboard/santri')->with('success', 'Status SPP berhasil direset di semua tempat.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Gagal mereset status SPP: ' . $e->getMessage());
+        }
     }
 
     public function store(Request $request)
@@ -223,7 +252,7 @@ class SantriController extends Controller
 
         return back()->with('success', 'Image uploaded successfully.');
     }
-    
+
     // public function store(Request $request)
     // {
     //     $request->validate([

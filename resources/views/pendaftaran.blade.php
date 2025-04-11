@@ -164,8 +164,8 @@
                                 class="block w-full mt-1 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                                 <option value="Putra Sore" class="text-blue-600">Putra Sore</option>
                                 <option value="Putra Malam" class="text-blue-600">Putra Malam</option>
+                                <option value="Putri Sore" class="text-pink-600">Putri Sore</option>
                                 <option value="Putri Pagi" class="text-pink-600">Putri Pagi</option>
-                                <option value="Putri Ahad" class="text-pink-600">Putri Ahad</option>
                             </select>
                         </div>
 

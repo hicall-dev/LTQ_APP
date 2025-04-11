@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     @php
-                        $sppList = [0, 1];
+                        $sppList = [0, 1, 2];
                     @endphp
                     <div class="col-span-3">
                         <label for="spp" class="block  font-medium leading-6 text-gray-900">Status SPP</label>
@@ -125,7 +125,13 @@
                                 @foreach ($sppList as $status_spp)
                                     <option value="{{ $status_spp }}"
                                         {{ isset($santri) && $santri->status_spp == $status_spp ? 'selected' : '0' }}>
-                                        {{ $status_spp == 0 ? 'Belum Lunas' : 'Lunas' }}
+                                        @if ($status_spp == 0)
+                                            Belum Lunas
+                                        @elseif ($status_spp == 1)
+                                            Lunas
+                                        @elseif ($status_spp == 2)
+                                            Gratis
+                                        @endif
                                     </option>
                                 @endforeach
                                 {{-- <option value="1" {{ isset($santri) && $santri->status_spp ? 'selected' : '' }}>
@@ -135,15 +141,102 @@
                             </select>
                         </div>
                     </div>
+                    @php
+                        $golongan_list = ['Putra Sore', 'Putra Malam', 'Putri Sore', 'Putri Pagi'];
+                    @endphp
                     <div class="col-span-3">
-                        <label for="operator_id" class="block font-medium leading-6 text-gray-900">Operator :
-                            {{ auth()->user()->name }}</label>
+                        <label for="golongan" class="block  font-medium leading-6 text-gray-900">Golongan</label>
                         <div class="mt-2">
-                            <input type="hidden" name="operator_id" id="operator_id" value="{{ auth()->user()->id }}"
+                            <select id="golongan" name="golongan"
+                                class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs leading-6"
+                                required="">
+                                @foreach ($golongan_list as $golongan)
+                                    <option value="{{ $golongan }}"
+                                        {{ isset($santri) && $santri->golongan == $golongan ? 'selected' : 'Putra Sore' }}>
+                                        {{ $golongan }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-span-3">
+                        <label for="operator_id" class="block font-medium leading-6 text-gray-900">Last Operator :
+                            {{ isset($user) ? $user->name : '' }}</label>
+                        <div class="mt-2">
+                            <input type="hidden" name="operator_id" id="operator_id"
+                                value="{{ auth()->user()->id }}"
                                 class="block px-3 w-fit rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6">
                         </div>
                     </div>
                 </div>
+                @isset($santri)
+                    <div>
+                        @if ($santri->status_spp != 2)
+                            <h1 class="mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Pembayaran SPP</h1>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                                    <thead>
+                                        <tr class="bg-gray-100">
+                                            <th class="border px-2 py-2 text-center">Tahun</th>
+                                            @php
+                                                $bulanList = [
+                                                    'Jan',
+                                                    'Feb',
+                                                    'Mar',
+                                                    'Apr',
+                                                    'Mei',
+                                                    'Jun',
+                                                    'Jul',
+                                                    'Agu',
+                                                    'Sep',
+                                                    'Okt',
+                                                    'Nov',
+                                                    'Des',
+                                                ];
+                                            @endphp
+                                            @foreach ($bulanList as $bulan)
+                                                <th class="border px-2 py-2 text-center">{{ $bulan }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $grouped = $santri->payments->groupBy('tahun');
+                                        @endphp
+                                        @foreach ($grouped as $tahun => $payments)
+                                            <tr>
+                                                <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                                </td>
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    @php
+                                                        $payment = $payments->firstWhere('bulan', $i);
+                                                    @endphp
+                                                    <td class="border px-2 py-2 text-center">
+                                                        @if ($payment)
+                                                            @if ($payment->status == 1)
+                                                                ✅
+                                                            @elseif ($payment->status == 0)
+                                                                ❌
+                                                            @elseif ($payment->status == 2)
+                                                                🆓
+                                                            @endif
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                @endfor
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        @else
+                            <h1 class="text-sm text-gray-500 italic mt-4">Santri ini bebas dari kewajiban pembayaran SPP.
+                            </h1>
+                        @endif
+                    </div>
+                @endisset
             </div>
             <div class="mt-2 flex items-center justify-end gap-x-6">
                 <a href="/dashboard/santri"

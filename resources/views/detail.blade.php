@@ -39,7 +39,15 @@
                         <label for="spp" class="block  font-medium leading-6 text-gray-900">Status SPP</label>
                         <div class="mt-2">
                             <input type="text" name="spp" id="spp" readonly
-                                value="{{ isset($santri->status_spp) && $santri->status_spp == 1 ? 'Lunas' : 'Belum Lunas' }}"
+                                value="{{ isset($santri->status_spp) ? ($santri->status_spp == 0 ? 'Belum Lunas' : ($santri->status_spp == 1 ? 'Lunas' : 'Gratis')) : 'Belum Lunas' }}"
+                                class="block w-full  px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6">
+                        </div>
+                    </div>
+                    <div class="col-span-3">
+                        <label for="golongan" class="block  font-medium leading-6 text-gray-900">Golongan</label>
+                        <div class="mt-2">
+                            <input type="text" name="golongan" id="golongan" readonly
+                                value="{{ isset($santri) ? $santri->golongan : '' }}"
                                 class="block w-full  px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6">
                         </div>
                     </div>
@@ -60,6 +68,68 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                @if ($santri->status_spp != 2)
+                <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Pembayaran SPP</h1>
+                <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="border px-2 py-2 text-center">Tahun</th>
+                            @php
+                                $bulanList = [
+                                    'Jan',
+                                    'Feb',
+                                    'Mar',
+                                    'Apr',
+                                    'Mei',
+                                    'Jun',
+                                    'Jul',
+                                    'Agu',
+                                    'Sep',
+                                    'Okt',
+                                    'Nov',
+                                    'Des',
+                                ];
+                            @endphp
+                            @foreach ($bulanList as $bulan)
+                                <th class="border px-2 py-2 text-center">{{ $bulan }}</th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                            // Mengelompokkan payment berdasarkan tahun
+                            $grouped = $santri->payments->groupBy('tahun');
+                        @endphp
+                        @foreach ($grouped as $tahun => $payments)
+                            <tr>
+                                <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}</td>
+                                @for ($i = 1; $i <= 12; $i++)
+                                    @php
+                                        $payment = $payments->firstWhere('bulan', $i);
+                                    @endphp
+                                    <td class="border px-2 py-2 text-center">
+                                        @if ($payment)
+                                            @if ($payment->status == 1)
+                                                ✅
+                                            @elseif ($payment->status == 0)
+                                                ❌
+                                            @elseif ($payment->status == 2)
+                                                🆓
+                                            @endif
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                @endfor
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                @else
+                <h1 class=" text-sm text-gray-500 italic mt-4">Santri Santri ini bebas dari kewajiban pembayaran SPP.</h1>
+                @endif
             </div>
         </div>
 

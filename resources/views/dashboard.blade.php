@@ -63,18 +63,59 @@
         <div class="my-9 flex ">
             <div
                 class=" w-full rounded-md shadow-sm mr-2 ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-blue-600">
-                <input type="search"id="search" name="search" autocomplete="off"
+                <input type="search" id="search" name="search" autocomplete="off"
                     class=" block w-full flex-auto border-0 bg-transparent py-3 px-3 text-gray-900 placeholder:text-gray-400 focus:ring-0  leading-6 rounded-md"
                     placeholder="Cari Berdasarkan Nama atau NIS">
 
             </div>
             <button type="submit"
-                class="inline-flex justify-center items-center rounded-md bg-blue-600 px-4  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                class="inline-flex justify-center items-center rounded-md bg-blue-600 px-4 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
                 <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class=" my-3 size-6">
                     <path stroke-linecap="round" stroke-linejoin="round"
                         d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
             </button>
+
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdownHover"
+                class="ml-2 w-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                type="button">Golongan <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke-width="1.5" stroke="currentColor" class="ml-1 size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdownHover"
+                class="absolute z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
+                    <li>
+                        <button type="sumbit" onclick="setSearchValue('Putra Sore')"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Putra Sore
+                        </button>
+                    </li>
+                    <li>
+                        <button type="submit" onclick="setSearchValue('Putra Malam')"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Putra Malam
+                        </button>
+                    </li>
+                    <li>
+                        <button type="submit" onclick="setSearchValue('Putri Sore')"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Putri Sore
+                        </button>
+                    </li>
+                    <li>
+                        <button type="submit" onclick="setSearchValue('Putri Pagi')"
+                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                            Putri Malam
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+
         </div>
     </form>
     {{ $santri->links() }}
@@ -87,6 +128,7 @@
                     <th class=" px-3 py-3">Nama</th>
                     <th class=" px-3 py-3">NIS</th>
                     <th class=" px-3 py-3">Kelas</th>
+                    <th class=" px-3 py-3">Golongan</th>
                     <th class=" px-3 py-3">SPP</th>
                     <th class=" px-3 py-3">Aksi</th>
                 </tr>
@@ -97,14 +139,20 @@
                         <td class=" py-3 bg-gray-50 dark:bg-gray-200"> {{ $santri->nama }} </td>
                         <td class=" py-3"> {{ $santri->nis }} </td>
                         <td class=" py-3 bg-gray-50 dark:bg-gray-200"> {{ $santri->kelas }} </td>
-                        <td class=" py-3">
+                        <td class=" py-3"> {{ $santri->golongan }} </td>
+                        <td class=" py-3 bg-gray-50 dark:bg-gray-200">
                             <div
                                 class="w-fit inline-flex justify-center items-center rounded-md py-2 px-2 font-semibold text-white shadow-sm {{ $santri->status_spp ? 'bg-green-500 ' : 'bg-red-500 ' }}">
-                                {{ $santri->status_spp ? 'Lunas' : 'Belum Lunas' }}
+                                @if ($santri->status_spp == 0)
+                                    Belum Lunas
+                                @elseif ($santri->status_spp == 1)
+                                    Lunas
+                                @elseif ($santri->status_spp == 2)
+                                    Gratis
+                                @endif
                             </div>
                         </td>
-                        <td
-                            class=" py-3 bg-gray-50 dark:bg-gray-200 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 sm:gap-1 md:gap-0 lg:gap-0">
+                        <td class=" py-3 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 sm:gap-1 md:gap-0 lg:gap-0">
                             <div>
                                 <a href="/dashboard/santri/{{ $santri->nis }}/edit"
                                     class=" w-4/5 inline-flex justify-center items-center rounded-md bg-blue-600 py-2 px-2 font-semibold text-white shadow-sm focus:ring-blue-200 hover:bg-blue-500 focus-visible:outline-blue-600">
@@ -251,7 +299,11 @@
                     i.style.display = 'none'
                 })
             }
-        };
+        }
+
+        function setSearchValue(value) {
+            document.getElementById('search').value = value; // Mengubah value input search
+        }
     </script>
 
 </x-layoutDB>

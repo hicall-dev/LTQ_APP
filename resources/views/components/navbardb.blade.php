@@ -15,13 +15,15 @@
             </div>
             <div class="flex items-center">
                 <div class=" md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <p class="rounded-md py-2 text-sm font-medium text-gray-300">{{ isset(auth()->user()->name) ? auth()->user()->name : ''}}</p>
+                    <div class=" flex items-baseline">
+                        <p class="rounded-md py-2 text-sm font-medium text-gray-300 mr-2">
+                            {{ isset(auth()->user()->name) ? auth()->user()->name : '' }}</p>
                         <p class="rounded-md py-2 text-sm font-medium text-gray-300">|</p>
                         <form action="/logout" method="POST">
                             @csrf
-                            <button type="submit" class="rounded-md bg-gray-900 hover:bg-red-700 px-3 py-2 text-sm font-medium text-white"
-                            aria-current="page">Keluar</button>
+                            <button type="submit"
+                                class="rounded-md bg-gray-900 hover:bg-red-700 px-3 py-2 text-sm font-medium text-white ml-2"
+                                aria-current="page">Keluar</button>
                         </form>
                     </div>
                 </div>

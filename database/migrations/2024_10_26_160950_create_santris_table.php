@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('nis')->unique();
             $table->string('kelas')->default('Tahfidz');
             $table->boolean('status_spp')->default(false);
+            $table->string('golongan');
             // $table->unsignedBigInteger('operator_id');
             // $table->foreign('operator_id')->references('id')->on('users');
             $table->foreignId('operator_id')->constrained(
