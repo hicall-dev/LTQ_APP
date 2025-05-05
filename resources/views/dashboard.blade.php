@@ -26,36 +26,38 @@
         </div>
     @endif
 
-
-
     <h1 class=" mb-1 text-5xl tracking-tight font-bold text-gray-900">{{ $judul }}</h1>
-    <div class=" my-9 mx-auto flex justify-end" ">
+    <div class=" my-9 mx-auto flex flex-wrap justify-end items-center">
         <div>
-            <button data-modal-target="reset-modal" data-modal-toggle="reset-modal" class=" mt-6 mb-1 w-fit inline-flex justify-center items-center rounded-md bg-red-500 px-3 py-2  font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" type="button">
+            <button data-modal-target="reset-modal" data-modal-toggle="reset-modal"
+                class=" mt-6 mb-1 w-fit h-fit inline-flex justify-center items-center rounded-md bg-red-500 px-3 py-2 font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                type="button">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="-ml-0.5 mr-1.5 size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d=" M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374
+                    stroke="currentColor" class="-ml-0.5 mr-1.5 size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d=" M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374
         1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12
         15.75h.007v.008H12v-.008Z" />
-    </svg>
-    Reset SPP
-    </button>
-    </div>
-    <a href="/dashboard/promo"
-        class=" mt-6 mb-1 mx-2 w-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 size-6">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-        </svg>
-        PROMO
-    </a>
-    <a href="/dashboard/santri/create"
-        class=" mt-6 mb-1 w-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="-ml-0.5 mr-1.5 size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d=" M12 4.5v15m7.5-7.5h-15">
-        </svg>
-        Tambah Santri
-    </a>
+                </svg>
+                Reset SPP
+            </button>
+        </div>
+        <a href="/dashboard/promo"
+            class=" mt-6 mb-1 mx-2 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="-ml-0.5 mr-1.5 size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+            </svg>
+            PROMO
+        </a>
+        <a href="/dashboard/santri/create"
+            class=" mt-6 mb-1 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                class="-ml-0.5 mr-1.5 size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d=" M12 4.5v15m7.5-7.5h-15">
+            </svg>
+            Tambah Santri
+        </a>
     </div>
 
     {{-- PENCARIAN --}}
@@ -75,53 +77,39 @@
                         d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                 </svg>
             </button>
+        </div>
 
-            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdownHover"
-                class="ml-2 w-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-5 py-2.5 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                type="button">Golongan <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="ml-1 size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-            </button>
-
-            <!-- Dropdown menu -->
-            <div id="dropdownHover"
-                class="absolute z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700">
-                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownHoverButton">
-                    <li>
-                        <button type="sumbit" onclick="setSearchValue('Putra Sore')"
-                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Putra Sore
-                        </button>
-                    </li>
-                    <li>
-                        <button type="submit" onclick="setSearchValue('Putra Malam')"
-                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Putra Malam
-                        </button>
-                    </li>
-                    <li>
-                        <button type="submit" onclick="setSearchValue('Putri Sore')"
-                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Putri Sore
-                        </button>
-                    </li>
-                    <li>
-                        <button type="submit" onclick="setSearchValue('Putri Pagi')"
-                            class="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                            Putri Malam
-                        </button>
-                    </li>
-                </ul>
+        <div class=" justify-center">
+            <div class="flex flex-wrap justify-center items-center rounded-md">
+                <button
+                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    type="sumbit" onclick="setSearchValue('Putra Sore')">Putra Sore ({{ $putrasore }})</button>
+                <button
+                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 v font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    type="sumbit" onclick="setSearchValue('Putra Malam')">Putra Malam ({{ $putramalam }})</button>
+                <button
+                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    type="sumbit" onclick="setSearchValue('Putri Pagi')">Putri Pagi ({{ $putripagi }})</button>
+                <button
+                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                    type="submit" onclick="setSearchValue('Putri Sore')">Putri Sore ({{ $putrisore }})</button>
+                <input type="hidden" name="spp" id="spp">
+                <button
+                    class="w-fit mx-2 rounded-md bg-green-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                    type="submit" onclick="setSearchSPP(1)">Lunas ({{ $lunas }})</button>
+                <button
+                    class="w-fit mx-2 rounded-md bg-red-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
+                    type="sumbit" onclick="setSearchSPP(0)">Belum Lunas ({{ $belumlunas }})</button>
+                <button
+                    class="w-fit mx-2 rounded-md bg-green-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                    type="submit" onclick="setSearchSPP(2)">Gratis ({{ $gratis }})</button>
             </div>
-
-
         </div>
     </form>
     {{ $santri->links() }}
 
     {{-- TABEL --}}
-    <div class=" relative overflow-x-auto shadow-md rounded-lg">
+    <div class=" mt-10 relative overflow-x-auto shadow-md rounded-lg">
         <table class=" w-full text-center">
             <thead class="uppercase bg-blue-500 dark:bg-blue-700 text-white">
                 <tr>
@@ -302,7 +290,13 @@
         }
 
         function setSearchValue(value) {
-            document.getElementById('search').value = value; // Mengubah value input search
+            document.getElementById('search').value = value;
+            document.getElementById('spp').value = ''; // kosongkan spp jika pakai search
+        }
+
+        function setSearchSPP(value) {
+            document.getElementById('spp').value = value;
+            document.getElementById('search').value = ''; // kosongkan search jika pakai spp
         }
     </script>
 

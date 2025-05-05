@@ -26,7 +26,17 @@ class DashboardSantriController extends Controller
             [
                 'title' => 'Dashboard',
                 'judul' => 'Daftar Santri',
-                'santri' => Santri::search()->orderBy('nis')->paginate(100)
+                'santri' => Santri::search()->orderBy('nis')->paginate(100),
+                // Data jumlah per golongan
+                'putrasore' => Santri::where('golongan', 'Putra Sore')->count(),
+                'putramalam' => Santri::where('golongan', 'Putra Malam')->count(),
+                'putripagi' => Santri::where('golongan', 'Putri Pagi')->count(),
+                'putrisore' => Santri::where('golongan', 'Putri Sore')->count(),
+
+                // Data jumlah per status SPP
+                'lunas' => Santri::where('status_spp', 1)->count(),
+                'belumlunas' => Santri::where('status_spp', 0)->count(),
+                'gratis' => Santri::where('status_spp', 2)->count(),
             ]
         );
     }

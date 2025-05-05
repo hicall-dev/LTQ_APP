@@ -26,9 +26,20 @@ class Santri extends Model
     public function scopeSearch(Builder $query): void
     {
         // dd(request());
-        $query->where('santris.nama', 'like', '%' . request('search') . '%')
-            ->orWhere('santris.nis', 'like', '%' . request('search') . '%')
-            ->orWhere('santris.golongan', 'like', '%' . request('search') . '%');
+        $search = request('search');
+        $spp = request('spp');
+
+        if ($search !== null && $search !== '') {
+            $query->where(function ($q) use ($search) {
+                $q->where('santris.nama', 'like', "%$search%")
+                    ->orWhere('santris.nis', 'like', "%$search%")
+                    ->orWhere('santris.golongan', 'like', "%$search%");
+            });
+        }
+
+        if ($spp !== null && $spp !== '') {
+            $query->where('santris.status_spp', $spp);
+        }
     }
 
     public function getRouteKeyName()
