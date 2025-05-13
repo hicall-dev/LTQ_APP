@@ -156,36 +156,37 @@ class DashboardSantriController extends Controller
         $validatedData['operator_id'] = auth('web')->user()->id;
 
         if (Santri::where('id', $santri->id)->update($validatedData)) {
+            if ($santri->status_spp != 2) {
+                $bulans = $validatedPayment['bulan'];
+                $tahuns = $validatedPayment['tahun'];
+                $statuses = $validatedPayment['status'];
 
-            $bulans = $validatedPayment['bulan'];
-            $tahuns = $validatedPayment['tahun'];
-            $statuses = $validatedPayment['status'];
-
-            DB::transaction(function () use ($santri, $bulans, $tahuns, $statuses) {
-                $now = now();
-                $currentTahun = $now->year;
-                $currentBulan = $now->month;
-                for ($i = 0; $i < count($bulans); $i++) {
-                    if ($bulans[$i] && $tahuns[$i] && $statuses[$i]) {
-                        $payment = Payment::updateOrCreate(
-                            [
-                                'santri_id' => $santri->id,
-                                'bulan' => $bulans[$i],
-                                'tahun' => $tahuns[$i]
-                            ],
-                            [
-                                'status' => $statuses[$i],
-                                'operator_id' => auth('web')->user()->id
-                            ]
-                        );
-                        if ($currentTahun == $tahuns[$i] && $currentBulan == $bulans[$i]) {
-                            $santriData = ['status_spp' => $statuses[$i]];
-                            Santri::where('id', $santri->id)->update($santriData);
-                        };
-                        $payment->touch();
+                DB::transaction(function () use ($santri, $bulans, $tahuns, $statuses) {
+                    $now = now();
+                    $currentTahun = $now->year;
+                    $currentBulan = $now->month;
+                    for ($i = 0; $i < count($bulans); $i++) {
+                        if ($bulans[$i] && $tahuns[$i] && $statuses[$i]) {
+                            $payment = Payment::updateOrCreate(
+                                [
+                                    'santri_id' => $santri->id,
+                                    'bulan' => $bulans[$i],
+                                    'tahun' => $tahuns[$i]
+                                ],
+                                [
+                                    'status' => $statuses[$i],
+                                    'operator_id' => auth('web')->user()->id
+                                ]
+                            );
+                            if ($currentTahun == $tahuns[$i] && $currentBulan == $bulans[$i]) {
+                                $santriData = ['status_spp' => $statuses[$i]];
+                                Santri::where('id', $santri->id)->update($santriData);
+                            };
+                            $payment->touch();
+                        }
                     }
-                }
-            });
+                });
+            }
             $santri->touch();
             return redirect('/dashboard/santri')->with('success', 'Berhasil Mengubah');
         }
