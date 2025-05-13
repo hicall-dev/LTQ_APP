@@ -11,7 +11,7 @@ class Santri extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'nis', 'kelas', 'status_spp', 'golongan', 'operator_id'];
+    protected $fillable = ['nama', 'nis', 'tanggal_lahir','tempat_lahir', 'kelas', 'status_spp', 'golongan', 'operator_id'];
 
     public function operator(): BelongsTo
     {

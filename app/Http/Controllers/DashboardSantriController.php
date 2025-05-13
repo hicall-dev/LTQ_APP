@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Santri;
 use App\Models\Payment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Contracts\Session\Session;
 use PHPUnit\Framework\Constraint\Operator;
@@ -68,6 +69,8 @@ class DashboardSantriController extends Controller
             'status_spp' => 'required',
             'golongan' => 'required',
             // 'operator_id' => 'required'
+            'tanggal_lahir' => 'required',
+            'tempat_lahir' => 'required'
         ]);
         $validatedData['operator_id'] = auth('web')->user()->id;
         $santri = Santri::create($validatedData); // <- $santri didefinisikan di sini
@@ -126,54 +129,68 @@ class DashboardSantriController extends Controller
         );
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Santri $santri)
     {
-        $rules = [
+        $santriData = [
             'nama' => 'required|max:255',
             'kelas' => 'required',
-            'status_spp' => 'required',
+            // 'status_spp' => 'required',
             'golongan' => 'required',
+            'tanggal_lahir' => 'required',
+            'tempat_lahir' => 'required'
+        ];
+
+        $santriPayment = [
+            'bulan' => 'array',
+            'tahun' => 'array',
+            'status' => 'array'
         ];
 
         if ($request->nis != $santri->nis) {
-            $rules['nis'] = 'required|unique:santris';
+            $santri_data['nis'] = 'required|unique:santris';
         }
 
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($santriData);
+        $validatedPayment = $request->validate($santriPayment);
+
         $validatedData['operator_id'] = auth('web')->user()->id;
 
         if (Santri::where('id', $santri->id)->update($validatedData)) {
 
-            // Optional: Memastikan updated_at pada santri ikut berubah (kalau semua data sama)
+            $bulans = $validatedPayment['bulan'];
+            $tahuns = $validatedPayment['tahun'];
+            $statuses = $validatedPayment['status'];
+
+            DB::transaction(function () use ($santri, $bulans, $tahuns, $statuses) {
+                $now = now();
+                $currentTahun = $now->year;
+                $currentBulan = $now->month;
+                for ($i = 0; $i < count($bulans); $i++) {
+                    if ($bulans[$i] && $tahuns[$i] && $statuses[$i]) {
+                        $payment = Payment::updateOrCreate(
+                            [
+                                'santri_id' => $santri->id,
+                                'bulan' => $bulans[$i],
+                                'tahun' => $tahuns[$i]
+                            ],
+                            [
+                                'status' => $statuses[$i],
+                                'operator_id' => auth('web')->user()->id
+                            ]
+                        );
+                        if ($currentTahun == $tahuns[$i] && $currentBulan == $bulans[$i]) {
+                            $santriData = ['status_spp' => $statuses[$i]];
+                            Santri::where('id', $santri->id)->update($santriData);
+                        };
+                        $payment->touch();
+                    }
+                }
+            });
             $santri->touch();
-            $now = now();
-
-            // Update atau create payment
-            $payment = Payment::updateOrCreate(
-                [
-                    'santri_id' => $santri->id,
-                    'tahun' => $now->year,
-                    'bulan' => $now->month,
-                    
-                ],
-                [
-                    'status' => $validatedData['status_spp'],
-                    'operator_id' => auth('web')->user()->id
-                ]
-            );
-
-            // Optional: sentuh payment biar updated_at pasti berubah
-            $payment->touch();
-
             return redirect('/dashboard/santri')->with('success', 'Berhasil Mengubah');
         }
-
         return back()->with('error', 'Gagal Mengubah!');
     }
-
 
     /**
      * Remove the specified resource from storage.

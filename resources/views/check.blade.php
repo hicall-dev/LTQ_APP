@@ -50,6 +50,16 @@
                             <td class="px-1">:</td>
                             <td>{{ $santri->nis }}</td>
                         </tr>
+                        @if (Request::path() != 'status_spp')
+                            <tr>
+                                <td>Tempat, Tanggal Lahir</td>
+                                <td class="px-1">:</td>
+                                <td>
+                                    {{ $santri->tempat_lahir }},
+                                    {{ \Carbon\Carbon::parse($santri->tanggal_lahir)->translatedFormat('d F Y') }}
+                                </td>
+                            </tr>
+                        @endif
                         <tr>
                             <td>Kelas</td>
                             <td class="px-1">:</td>

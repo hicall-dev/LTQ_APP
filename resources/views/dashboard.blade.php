@@ -28,7 +28,7 @@
 
     <h1 class=" mb-1 text-5xl tracking-tight font-bold text-gray-900">{{ $judul }}</h1>
     <div class=" my-9 mx-auto flex flex-wrap justify-end items-center">
-        <div>
+        {{-- <div>
             <button data-modal-target="reset-modal" data-modal-toggle="reset-modal"
                 class=" mt-6 mb-1 w-fit h-fit inline-flex justify-center items-center rounded-md bg-red-500 px-3 py-2 font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                 type="button">
@@ -40,7 +40,7 @@
                 </svg>
                 Reset SPP
             </button>
-        </div>
+        </div> --}}
         <a href="/dashboard/promo"
             class=" mt-6 mb-1 mx-2 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
             <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -131,7 +131,9 @@
                         <td class=" py-3 bg-gray-50 dark:bg-gray-200">
                             <div
                                 class="w-fit inline-flex justify-center items-center rounded-md py-2 px-2 font-semibold text-white shadow-sm {{ $santri->status_spp ? 'bg-green-500 ' : 'bg-red-500 ' }}">
-                                @if ($santri->status_spp == 0)
+                                @if ($santri->status_spp == null)
+                                    Belum Lunas
+                                @elseif ($santri->status_spp == 0)
                                     Belum Lunas
                                 @elseif ($santri->status_spp == 1)
                                     Lunas
