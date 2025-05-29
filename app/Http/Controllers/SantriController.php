@@ -136,8 +136,12 @@ class SantriController extends Controller
 
         // Cek apakah santri ditemukan
         if ($santri) {
+            $nilaiSekarang = $santri->nilais()
+                ->where('bulan', now()->month)
+                ->where('tahun', now()->year)
+                ->first();
             $materi = isset($materiHafalan[$santri->kelas]) ? $materiHafalan[$santri->kelas] : null;
-            return view('check', compact('santri', 'title', 'materi'));
+            return view('check', compact('santri', 'title', 'materi', 'nilaiSekarang'));
         } else {
             return redirect()->back()->with('error', 'Santri tidak ditemukan');
         }

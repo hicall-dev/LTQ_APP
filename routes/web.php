@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/pendaftaran', function () {
-$dataKelas = [
+    $dataKelas = [
         [
             'nama' => 'Putra Sore',
             'waktu' => '15.00 - 17.30',
@@ -117,6 +117,11 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/register', [RegisterController::class, 'index']);
 Route::post('/register', [RegisterController::class, 'store']);
 
+Route::get('/dashboard/register', [RegisterController::class, 'addAdmin'])->middleware('auth');
+Route::post('/dashboard/register', [RegisterController::class, 'createAdmin'])->middleware('auth');
+Route::get('/dashboard/reset-password/{user}', [RegisterController::class, 'peek'])->middleware('auth');
+Route::post('/dashboard/reset-password', [RegisterController::class, 'resetPassword'])->middleware('auth');
+Route::delete('/dashboard/reset-password/{user}', [RegisterController::class, 'destroy'])->middleware('auth');
 Route::fallback(function () {
     return redirect('/');
 });

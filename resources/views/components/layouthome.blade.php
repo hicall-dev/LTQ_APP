@@ -23,7 +23,7 @@
                 <source media="(min-width: 768px)" srcset="{{ asset('img/banner2.jpg') }}">
                 <img src="{{ asset('img/banner1.jpg') }}" alt="">
                 </picture>
-            <div class="mx-auto max-w-7xl px-4 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
+            <div class="mx-auto max-w-7xl h-full px-4 pt-2 pb-32 sm:px-6 lg:px-8 bg-white">
                 {{ $slot }}
             </div>
         </main>

@@ -60,149 +60,419 @@
         <div class="space-y-12">
             <div class="border-b border-gray-900/10 pb-12">
                 <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div class="col-span-3">
-                        <label for="nama" class="block font-medium leading-6 text-gray-900">Nama Lengkap</label>
-                        <div class="mt-2">
-                            <input type="text" name="nama" id="nama"
-                                value="{{ isset($santri) ? $santri->nama : '' }}"
-                                class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
-                                required="">
-                        </div>
-                    </div>
-
-                    <div class="col-span-3">
-                        <label for="nis" class="block font-medium leading-6 text-gray-900">
-                            NIS
+                    @if (auth()->user()->role == 0)
+                        <div class="col-span-3">
+                            <label for="nama" class="block font-medium leading-6 text-gray-900">Nama Lengkap</label>
                             <div class="mt-2">
-                                <input type="number" name="nis" id="nis"
-                                    value="{{ isset($santri) ? $santri->nis : old('nis') }}"
-                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6 peer @error('nis') border-red-500 @enderror"
-                                    required>
+                                <input type="text" name="nama" id="nama"
+                                    value="{{ isset($santri) ? $santri->nama : '' }}"
+                                    class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
+                                    required="">
                             </div>
-                        </label>
+                        </div>
 
-                    </div>
-                    <div class="col-span-3">
-                        <label for="tempat_lahir" class="block font-medium leading-6 text-gray-900">Tempat Lahir</label>
-                        <div class="mt-2">
-                            <input type="text" name="tempat_lahir" id="tempat_lahir"
-                                value="{{ isset($santri) ? $santri->tempat_lahir : '' }}"
-                                class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
-                                required="">
-                        </div>
-                    </div>
-                    <div class="col-span-3">
-                        <label for="tanggal_lahir" class="block  font-medium leading-6 text-gray-900">Tanggal
-                            Lahir</label>
-                        <div class="mt-2">
-                            <input type="date" name="tanggal_lahir" id="tanggal_lahir"
-                                value="{{ isset($santri) ? $santri->tanggal_lahir : '' }}"
-                                class="block w-full  px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
-                                onfocus="this.showPicker && this.showPicker()">
-                        </div>
-                    </div>
+                        <div class="col-span-3">
+                            <label for="nis" class="block font-medium leading-6 text-gray-900">
+                                NIS
+                                <div class="mt-2">
+                                    <input type="number" name="nis" id="nis"
+                                        value="{{ isset($santri) ? $santri->nis : old('nis') }}"
+                                        class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6 peer @error('nis') border-red-500 @enderror"
+                                        required>
+                                </div>
+                            </label>
 
-                    @php
-                        $kelasList = [
-                            'Tahsin Awwal',
-                            'Tahsin Akhir',
-                            'Mutawassith',
-                            'Pra Takhossus Awwal',
-                            'Pra Takhossus Akhir',
-                            'Takhossus Awwal',
-                            'Takhossus Tsani',
-                            'Takhossus Tsalits',
-                            'Takhossus Robi',
-                            'Takhossus Khomis',
-                            'Takhossus Akhir',
-                        ];
-                    @endphp
-                    <div class="col-span-3">
-                        <label for="kelas" class="block  font-medium leading-6 text-gray-900">Kelas</label>
-                        <div class="mt-2">
-                            <select id="kelas" name="kelas"
-                                class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
-                                required="">
-                                @foreach ($kelasList as $kelas)
-                                    <option value="{{ $kelas }}"
-                                        {{ isset($santri) && $santri->kelas == $kelas ? 'selected' : 'Tahsin Awwal' }}>
-                                        {{ $kelas }}
-                                    </option>
-                                @endforeach
-                            </select>
                         </div>
-                    </div>
-                    @if (empty($santri))
+                        <div class="col-span-3">
+                            <label for="tempat_lahir" class="block font-medium leading-6 text-gray-900">Tempat
+                                Lahir</label>
+                            <div class="mt-2">
+                                <input type="text" name="tempat_lahir" id="tempat_lahir"
+                                    value="{{ isset($santri) ? $santri->tempat_lahir : '' }}"
+                                    class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
+                                    required="">
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <label for="tanggal_lahir" class="block  font-medium leading-6 text-gray-900">Tanggal
+                                Lahir</label>
+                            <div class="mt-2">
+                                <input type="date" name="tanggal_lahir" id="tanggal_lahir"
+                                    value="{{ isset($santri) ? $santri->tanggal_lahir : '' }}"
+                                    class="block w-full  px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
+                                    onfocus="this.showPicker && this.showPicker()">
+                            </div>
+                        </div>
+
                         @php
-                            $sppList = [0, 1, 2];
+                            $kelasList = [
+                                'Tahsin Awwal',
+                                'Tahsin Akhir',
+                                'Mutawassith',
+                                'Pra Takhossus Awwal',
+                                'Pra Takhossus Akhir',
+                                'Takhossus Awwal',
+                                'Takhossus Tsani',
+                                'Takhossus Tsalits',
+                                'Takhossus Robi',
+                                'Takhossus Khomis',
+                                'Takhossus Akhir',
+                            ];
                         @endphp
                         <div class="col-span-3">
-                            <label for="spp" class="block  font-medium leading-6 text-gray-900">Status
-                                SPP</label>
+                            <label for="kelas" class="block  font-medium leading-6 text-gray-900">Kelas</label>
                             <div class="mt-2">
-                                <select id="status_spp" name="status_spp"
-                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6"
+                                <select id="kelas" name="kelas"
+                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
                                     required="">
-                                    @foreach ($sppList as $status_spp)
-                                        <option value="{{ $status_spp }}"
-                                            {{ isset($santri) && $santri->status_spp == $status_spp ? 'selected' : '0' }}>
-                                            @if ($status_spp == 0)
-                                                Belum Lunas
-                                            @elseif ($status_spp == 1)
-                                                Lunas
-                                            @elseif ($status_spp == 2)
-                                                Gratis
-                                            @endif
+                                    @foreach ($kelasList as $kelas)
+                                        <option value="{{ $kelas }}"
+                                            {{ isset($santri) && $santri->kelas == $kelas ? 'selected' : 'Tahsin Awwal' }}>
+                                            {{ $kelas }}
                                         </option>
                                     @endforeach
-                                    {{-- <option value="1" {{ isset($santri) && $santri->status_spp ? 'selected' : '' }}>
-                                    Lunas</option>
-                                <option value="0" {{ isset($santri) && !$santri->status_spp ? 'selected' : '' }}>
-                                    Belum Lunas</option> --}}
                                 </select>
                             </div>
                         </div>
-                    @endif
-                    @php
-                        $golongan_list = ['Putra Sore', 'Putra Malam', 'Putri Sore', 'Putri Pagi'];
-                    @endphp
-                    <div class="col-span-3">
-                        <label for="golongan" class="block  font-medium leading-6 text-gray-900">Golongan</label>
-                        <div class="mt-2">
-                            <select id="golongan" name="golongan"
-                                class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6"
-                                required="">
-                                @foreach ($golongan_list as $golongan)
-                                    <option value="{{ $golongan }}"
-                                        {{ isset($santri) && $santri->golongan == $golongan ? 'selected' : 'Putra Sore' }}>
-                                        {{ $golongan }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        @if (empty($santri))
+                            @php
+                                $sppList = [0, 1, 2];
+                            @endphp
+                            <div class="col-span-3">
+                                <label for="spp" class="block  font-medium leading-6 text-gray-900">Status
+                                    SPP</label>
+                                <div class="mt-2">
+                                    <select id="status_spp" name="status_spp"
+                                        class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6"
+                                        required="">
+                                        @foreach ($sppList as $status_spp)
+                                            <option value="{{ $status_spp }}"
+                                                {{ isset($santri) && $santri->status_spp == $status_spp ? 'selected' : '0' }}>
+                                                @if ($status_spp == 0)
+                                                    Belum Lunas
+                                                @elseif ($status_spp == 1)
+                                                    Lunas
+                                                @elseif ($status_spp == 2)
+                                                    Gratis
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                        {{-- <option value="1" {{ isset($santri) && $santri->status_spp ? 'selected' : '' }}>
+                                    Lunas</option>
+                                <option value="0" {{ isset($santri) && !$santri->status_spp ? 'selected' : '' }}>
+                                    Belum Lunas</option> --}}
+                                    </select>
+                                </div>
+                            </div>
+                        @endif
+                        @php
+                            $golongan_list = ['Putra Sore', 'Putra Malam', 'Putri Sore', 'Putri Pagi'];
+                        @endphp
+                        <div class="col-span-3">
+                            <label for="golongan" class="block  font-medium leading-6 text-gray-900">Golongan</label>
+                            <div class="mt-2">
+                                <select id="golongan" name="golongan"
+                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 leading-6"
+                                    required="">
+                                    @foreach ($golongan_list as $golongan)
+                                        <option value="{{ $golongan }}"
+                                            {{ isset($santri) && $santri->golongan == $golongan ? 'selected' : 'Putra Sore' }}>
+                                            {{ $golongan }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-span-3">
-                        {{-- <label for="operator_id" class="block font-medium leading-6 text-gray-900">Operator :
+                        <div class="col-span-3">
+                            <label for="pembimbing_id"
+                                class="block font-medium leading-6 text-gray-900">Pembimbing</label>
+                            <div class="mt-2">
+                                <select name="pembimbing_id" id="pembimbing_id"
+                                    class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-lime-600 leading-6">
+                                    @foreach ($pembimbing as $pembimbings)
+                                        <option value="{{ $pembimbings->id }}"
+                                            {{ isset($santri) && $santri->pembimbing_id == $pembimbings->id ? 'selected' : '' }}>
+                                            {{ $pembimbings->username }} -- {{ $pembimbings->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            {{-- <label for="operator_id" class="block font-medium leading-6 text-gray-900">Operator :
                             {{ isset($user) ? $user->name : '' }}</label>
                         <div class="mt-2"> --}}
-                        <input type="hidden" name="operator_id" id="operator_id" value="{{ auth()->user()->id }}"
-                            class="block px-3 w-fit rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6">
-                    </div>
+                            <input type="hidden" name="operator_id" id="operator_id"
+                                value="{{ auth()->user()->id }}"
+                                class="block px-3 w-fit rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6">
+                        </div>
+                    @elseif (auth()->user()->role == 1)
+                        <div class="col-span-3">
+                            <label for="nama" class="block font-medium leading-6 text-gray-900">Nama
+                                Lengkap</label>
+                            <div class="mt-2">
+                                <input type="text" name="nama" id="nama"
+                                    value="{{ isset($santri) ? $santri->nama : '' }}"
+                                    class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600  leading-6"
+                                    readonly="">
+                            </div>
+                        </div>
+                        <div class="col-span-3">
+                            <label for="nis" class="block font-medium leading-6 text-gray-900">
+                                NIS
+                                <div class="mt-2">
+                                    <input type="number" name="nis" id="nis"
+                                        value="{{ isset($santri) ? $santri->nis : old('nis') }}"
+                                        class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600 leading-6 peer @error('nis') border-red-500 @enderror"
+                                        readonly>
+                                </div>
+                            </label>
+                        </div>
+                        @php
+                            $kelasList = [
+                                'Tahsin Awwal',
+                                'Tahsin Akhir',
+                                'Mutawassith',
+                                'Pra Takhossus Awwal',
+                                'Pra Takhossus Akhir',
+                                'Takhossus Awwal',
+                                'Takhossus Tsani',
+                                'Takhossus Tsalits',
+                                'Takhossus Robi',
+                                'Takhossus Khomis',
+                                'Takhossus Akhir',
+                            ];
+                        @endphp
+                        <div class="col-span-3">
+                            <label for="kelas" class="block  font-medium leading-6 text-gray-900">Kelas</label>
+                            <div class="mt-2">
+                                <select id="kelas" name="kelas"
+                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6"
+                                    required="">
+                                    @foreach ($kelasList as $kelas)
+                                        <option value="{{ $kelas }}"
+                                            {{ isset($santri) && $santri->kelas == $kelas ? 'selected' : 'Tahsin Awwal' }}>
+                                            {{ $kelas }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @php
+                            $nilaiList = [
+                                4 => 'A. Sangat Baik',
+                                3 => 'B. Baik',
+                                2 => 'C. Cukup',
+                                1 => 'D. Kurang',
+                                0 => 'E. Sangat Kurang',
+                            ];
+                        @endphp
+
+                        <div class="col-span-3">
+                            <label for="hafalan" class="block font-medium leading-6 text-gray-900">Batasan
+                                Hafalan {{ now()->locale('id')->isoFormat('MMMM YYYY') }}
+                            </label>
+                            <div class="mt-2">
+                                <input type="text" name="hafalan" id="hafalan"
+                                    value="{{ old('hafalan', $nilaiSekarang->hafalan ?? '') }}"
+                                    class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600 leading-6"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="col-span-3">
+                            <label for="perkembangan" class="block font-medium leading-6 text-gray-900">Nilai
+                                Perkembangan {{ now()->locale('id')->isoFormat('MMMM YYYY') }}
+                            </label>
+                            <div class="mt-2">
+                                <select id="perkembangan" name="perkembangan"
+                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-lime-600 leading-6"
+                                    required>
+                                    @foreach ($nilaiList as $key => $label)
+                                        <option value="{{ $key }}"
+                                            {{ old('perkembangan', $nilaiSekarang->perkembangan ?? 0) == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-span-3">
+                            <label for="akhlak" class="block font-medium leading-6 text-gray-900">Nilai
+                                Akhlak {{ now()->locale('id')->isoFormat('MMMM YYYY') }}
+                            </label>
+                            <div class="mt-2">
+                                <select id="akhlak" name="akhlak"
+                                    class="block w-full px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-lime-600 leading-6"
+                                    required>
+                                    @foreach ($nilaiList as $key => $label)
+                                        <option value="{{ $key }}"
+                                            {{ old('akhlak', $nilaiSekarang->akhlak ?? 0) == $key ? 'selected' : '' }}>
+                                            {{ $label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                    @endif
+
                 </div>
             </div>
-            @if ($errors->any())
-                <div class="text-red-500">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @isset($santri)
-                <div>
-                    @if ($santri->status_spp != 2)
-                        <h1 class="mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Pembayaran SPP</h1>
+
+            @if (auth()->user()->role == 0)
+                @isset($santri)
+                    <div>
+                        @if ($santri->status_spp != 2)
+                            <h1 class="mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Pembayaran SPP</h1>
+                            <div class="overflow-x-auto">
+                                <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                                    <thead>
+                                        <tr class="bg-gray-100">
+                                            <th class="border px-2 py-2 text-center">Tahun</th>
+                                            @php
+                                                $bulanList = [
+                                                    'Jan',
+                                                    'Feb',
+                                                    'Mar',
+                                                    'Apr',
+                                                    'Mei',
+                                                    'Jun',
+                                                    'Jul',
+                                                    'Agu',
+                                                    'Sep',
+                                                    'Okt',
+                                                    'Nov',
+                                                    'Des',
+                                                ];
+                                            @endphp
+                                            @foreach ($bulanList as $bulan)
+                                                <th class="border px-2 py-2 text-center">{{ $bulan }}</th>
+                                            @endforeach
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $grouped = $santri->payments->groupBy('tahun');
+                                        @endphp
+                                        @foreach ($grouped as $tahun => $payments)
+                                            <tr>
+                                                <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                                </td>
+                                                @for ($i = 1; $i <= 12; $i++)
+                                                    @php
+                                                        $payment = $payments->firstWhere('bulan', $i);
+                                                    @endphp
+                                                    <td class="border px-2 py-2 text-center">
+                                                        @if ($payment)
+                                                            @if ($payment->status == 1)
+                                                                ✅
+                                                            @elseif ($payment->status == 0)
+                                                                ❌
+                                                            @elseif ($payment->status == 2)
+                                                                🆓
+                                                            @endif
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                @endfor
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="mt-10 space-y-4">
+                                <label class="block font-medium leading-6 text-gray-900">Pembayaran</label>
+                                <div id="dropdown-container" class="space-y-2">
+                                    <!-- Baris pertama -->
+                                    <div class="grid grid-cols-1 sm:grid-cols-7 gap-x-4 items-center">
+                                        @php
+                                            $bulanIndonesia = [
+                                                'Januari',
+                                                'Februari',
+                                                'Maret',
+                                                'April',
+                                                'Mei',
+                                                'Juni',
+                                                'Juli',
+                                                'Agustus',
+                                                'September',
+                                                'Oktober',
+                                                'November',
+                                                'Desember',
+                                            ];
+                                        @endphp
+
+                                        <div class="col-span-2 my-2">
+                                            <select name="bulanPayment[]"
+                                                class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                                <option value="">-- Bulan --</option>
+                                                @foreach (range(1, 12) as $bln)
+                                                    <option value="{{ $bln }}">
+                                                        {{ $bulanIndonesia[$bln - 1] }}
+                                                        <!-- Menampilkan nama bulan dalam bahasa Indonesia -->
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="col-span-2 my-2">
+                                            <select name="tahunPayment[]"
+                                                class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                                <option value="">-- Tahun --</option>
+                                                @foreach (range(date('Y'), date('Y') + 5) as $thn)
+                                                    <option value="{{ $thn }}">{{ $thn }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        @php
+                                            $sppList = [0, 1];
+                                        @endphp
+                                        <div class="col-span-2 my-2">
+                                            <select name="statusPayment[]"
+                                                class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                                <option value="">-- Status --</option>
+                                                @foreach ($sppList as $status_spp)
+                                                    <option value="{{ $status_spp }}">
+                                                        @if ($status_spp == 0)
+                                                            Belum Lunas
+                                                        @elseif ($status_spp == 1)
+                                                            Lunas
+                                                        @endif
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="flex">
+                                            <div class="w-full mx-2 my-2">
+                                                <button type="button" onclick="tambahDropdownPayment()"
+                                                    class="rounded-md bg-green-500 w-full px-3 py-2 text-white font-semibold shadow-sm hover:bg-green-400">
+                                                    +
+                                                </button>
+
+                                            </div>
+                                            <div class="w-full mx-2 my-2">
+                                                <button type="button" onclick="resetDropdownPayment()"
+                                                    class="rounded-md bg-red-500 w-full px-3 py-2 text-white font-semibold shadow-sm hover:bg-red-400">
+                                                    Reset
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        @else
+                            <h1 class="text-sm text-gray-500 italic mt-4">Santri ini bebas dari kewajiban pembayaran SPP.
+                            </h1>
+                        @endif
+
+                    </div>
+
+                    <div>
+                        <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Nilai Perkembangan</h1>
                         <div class="overflow-x-auto">
                             <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
                                 <thead>
@@ -231,25 +501,21 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        $grouped = $santri->payments->groupBy('tahun');
+                                        $konversiHuruf = [0 => 'E', 1 => 'D', 2 => 'C', 3 => 'B', 4 => 'A'];
+                                        $grouped = $santri->nilais->groupBy('tahun');
                                     @endphp
-                                    @foreach ($grouped as $tahun => $payments)
+
+                                    @foreach ($grouped as $tahun => $nilais)
                                         <tr>
                                             <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
                                             </td>
                                             @for ($i = 1; $i <= 12; $i++)
                                                 @php
-                                                    $payment = $payments->firstWhere('bulan', $i);
+                                                    $nilaiBulan = $nilais->firstWhere('bulan', $i);
                                                 @endphp
                                                 <td class="border px-2 py-2 text-center">
-                                                    @if ($payment)
-                                                        @if ($payment->status == 1)
-                                                            ✅
-                                                        @elseif ($payment->status == 0)
-                                                            ❌
-                                                        @elseif ($payment->status == 2)
-                                                            🆓
-                                                        @endif
+                                                    @if ($nilaiBulan && isset($nilaiBulan->perkembangan))
+                                                        {{ $konversiHuruf[$nilaiBulan->perkembangan] ?? '-' }}
                                                     @else
                                                         -
                                                     @endif
@@ -258,101 +524,306 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
+
                             </table>
                         </div>
-                        <div class="mt-10 space-y-4">
-                            <label class="block font-medium leading-6 text-gray-900">Pembayaran</label>
 
-                            <div id="dropdown-container" class="space-y-2">
-                                <!-- Baris pertama -->
-                                <div class="grid grid-cols-1 sm:grid-cols-7 gap-x-4 items-center">
+                    </div>
+                    <div>
+                        <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Nilai Akhlak</h1>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th class="border px-2 py-2 text-center">Tahun</th>
+                                        @php
+                                            $bulanList = [
+                                                'Jan',
+                                                'Feb',
+                                                'Mar',
+                                                'Apr',
+                                                'Mei',
+                                                'Jun',
+                                                'Jul',
+                                                'Agu',
+                                                'Sep',
+                                                'Okt',
+                                                'Nov',
+                                                'Des',
+                                            ];
+                                        @endphp
+                                        @foreach ($bulanList as $bulan)
+                                            <th class="border px-2 py-2 text-center">{{ $bulan }}</th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     @php
-                                        $bulanIndonesia = [
-                                            'Januari',
-                                            'Februari',
-                                            'Maret',
-                                            'April',
-                                            'Mei',
-                                            'Juni',
-                                            'Juli',
-                                            'Agustus',
-                                            'September',
-                                            'Oktober',
-                                            'November',
-                                            'Desember',
-                                        ];
+                                        $konversiHuruf = [0 => 'E', 1 => 'D', 2 => 'C', 3 => 'B', 4 => 'A'];
+                                        $grouped = $santri->nilais->groupBy('tahun');
                                     @endphp
 
-                                    <div class="col-span-2 my-2">
-                                        <select name="bulan[]"
-                                            class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-indigo-600">
-                                            <option value="">-- Bulan --</option>
-                                            @foreach (range(1, 12) as $bln)
-                                                <option value="{{ $bln }}">
-                                                    {{ $bulanIndonesia[$bln - 1] }}
-                                                    <!-- Menampilkan nama bulan dalam bahasa Indonesia -->
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-
-                                    <div class="col-span-2 my-2">
-                                        <select name="tahun[]"
-                                            class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-indigo-600">
-                                            <option value="">-- Tahun --</option>
-                                            @foreach (range(date('Y'), date('Y') + 5) as $thn)
-                                                <option value="{{ $thn }}">{{ $thn }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    @php
-                                        $sppList = [0, 1];
-                                    @endphp
-                                    <div class="col-span-2 my-2">
-                                        <select name="status[]"
-                                            class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-indigo-600">
-                                            <option value="">-- Status --</option>
-                                            @foreach ($sppList as $status_spp)
-                                                <option value="{{ $status_spp }}">
-                                                    @if ($status_spp == 0)
-                                                        Belum Lunas
-                                                    @elseif ($status_spp == 1)
-                                                        Lunas
+                                    @foreach ($grouped as $tahun => $nilais)
+                                        <tr>
+                                            <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                            </td>
+                                            @for ($i = 1; $i <= 12; $i++)
+                                                @php
+                                                    $nilaiBulan = $nilais->firstWhere('bulan', $i);
+                                                @endphp
+                                                <td class="border px-2 py-2 text-center">
+                                                    @if ($nilaiBulan && isset($nilaiBulan->akhlak))
+                                                        {{ $konversiHuruf[$nilaiBulan->akhlak] ?? '-' }}
+                                                    @else
+                                                        -
                                                     @endif
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="flex">
-                                        <div class="w-full mx-2 my-2">
-                                            <button type="button" onclick="tambahDropdown()"
-                                                class="rounded-md bg-green-500 w-full px-3 py-2 text-white font-semibold shadow-sm hover:bg-green-400">
-                                                +
-                                            </button>
+                                                </td>
+                                            @endfor
+                                        </tr>
+                                    @endforeach
+                                </tbody>
 
-                                        </div>
-                                        <div class="w-full mx-2 my-2">
-                                            <button type="button" onclick="resetDropdown()"
-                                                class="rounded-md bg-red-500 w-full px-3 py-2 text-white font-semibold shadow-sm hover:bg-red-400">
-                                                Reset
-                                            </button>
-                                        </div>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="mt-10 space-y-4">
+                        <label class="block font-medium leading-6 text-gray-900">Nilai</label>
+                        <div id="dropdown-containerNilai" class="space-y-2">
+                            <!-- Baris pertama -->
+                            <div class="grid grid-cols-1 sm:grid-cols-7 gap-x-4 items-center">
+                                @php
+                                    $bulanIndonesia = [
+                                        'Januari',
+                                        'Februari',
+                                        'Maret',
+                                        'April',
+                                        'Mei',
+                                        'Juni',
+                                        'Juli',
+                                        'Agustus',
+                                        'September',
+                                        'Oktober',
+                                        'November',
+                                        'Desember',
+                                    ];
+                                @endphp
+
+                                <div class="col-span-1 my-2">
+                                    <select name="bulanNilai[]"
+                                        class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                        <option value="">-- Bulan --</option>
+                                        @foreach (range(1, 12) as $bln)
+                                            <option value="{{ $bln }}">
+                                                {{ $bulanIndonesia[$bln - 1] }}
+                                                <!-- Menampilkan nama bulan dalam bahasa Indonesia -->
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="col-span-1 my-2">
+                                    <select name="tahunNilai[]"
+                                        class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                        <option value="">-- Tahun --</option>
+                                        @foreach (range(date('Y'), date('Y') + 5) as $thn)
+                                            <option value="{{ $thn }}">{{ $thn }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @php
+                                    $nilaiList = [0, 1, 2, 3, 4];
+                                @endphp
+                                <div class="col-span-2 my-2">
+                                    <select name="perkembangan[]"
+                                        class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                        <option value="">-- Perkembangan --</option>
+                                        @foreach ($nilaiList as $nilai)
+                                            <option value="{{ $nilai }}">
+                                                @if ($nilai == 0)
+                                                    Sangat Kurang
+                                                @elseif ($nilai == 1)
+                                                    Kurang
+                                                @elseif ($nilai == 2)
+                                                    Cukup
+                                                @elseif ($nilai == 3)
+                                                    Baik
+                                                @elseif ($nilai == 4)
+                                                    Sangat Baik
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-span-2 my-2">
+                                    <select name="akhlak[]"
+                                        class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                                        <option value="">-- Akhlak --</option>
+                                        @foreach ($nilaiList as $nilai)
+                                            <option value="{{ $nilai }}">
+                                                @if ($nilai == 0)
+                                                    Sangat Kurang
+                                                @elseif ($nilai == 1)
+                                                    Kurang
+                                                @elseif ($nilai == 2)
+                                                    Cukup
+                                                @elseif ($nilai == 3)
+                                                    Baik
+                                                @elseif ($nilai == 4)
+                                                    Sangat Baik
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="flex">
+                                    <div class="w-full mx-2 my-2">
+                                        <button type="button" onclick="tambahDropdownNilai()"
+                                            class="rounded-md bg-green-500 w-full px-3 py-2 text-white font-semibold shadow-sm hover:bg-green-400">
+                                            +
+                                        </button>
+
+                                    </div>
+                                    <div class="w-full mx-2 my-2">
+                                        <button type="button" onclick="resetDropdownNilai()"
+                                            class="rounded-md bg-red-500 w-full px-3 py-2 text-white font-semibold shadow-sm hover:bg-red-400">
+                                            Reset
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                    @else
-                        <h1 class="text-sm text-gray-500 italic mt-4">Santri ini bebas dari kewajiban pembayaran SPP.
-                        </h1>
-                    @endif
+                    </div>
+                @endisset
+            @else
+                <div>
+                    <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Nilai Perkembangan</h1>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border px-2 py-2 text-center">Tahun</th>
+                                    @php
+                                        $bulanList = [
+                                            'Jan',
+                                            'Feb',
+                                            'Mar',
+                                            'Apr',
+                                            'Mei',
+                                            'Jun',
+                                            'Jul',
+                                            'Agu',
+                                            'Sep',
+                                            'Okt',
+                                            'Nov',
+                                            'Des',
+                                        ];
+                                    @endphp
+                                    @foreach ($bulanList as $bulan)
+                                        <th class="border px-2 py-2 text-center">{{ $bulan }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $konversiHuruf = [0 => 'E', 1 => 'D', 2 => 'C', 3 => 'B', 4 => 'A'];
+                                    $grouped = $santri->nilais->groupBy('tahun');
+                                @endphp
+
+                                @foreach ($grouped as $tahun => $nilais)
+                                    <tr>
+                                        <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                        </td>
+                                        @for ($i = 1; $i <= 12; $i++)
+                                            @php
+                                                $nilaiBulan = $nilais->firstWhere('bulan', $i);
+                                            @endphp
+                                            <td class="border px-2 py-2 text-center">
+                                                @if ($nilaiBulan && isset($nilaiBulan->perkembangan))
+                                                    {{ $konversiHuruf[$nilaiBulan->perkembangan] ?? '-' }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                        @endfor
+                                    </tr>
+                                @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
 
                 </div>
-            @endisset
+                <div>
+                    <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Nilai Akhlak</h1>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border px-2 py-2 text-center">Tahun</th>
+                                    @php
+                                        $bulanList = [
+                                            'Jan',
+                                            'Feb',
+                                            'Mar',
+                                            'Apr',
+                                            'Mei',
+                                            'Jun',
+                                            'Jul',
+                                            'Agu',
+                                            'Sep',
+                                            'Okt',
+                                            'Nov',
+                                            'Des',
+                                        ];
+                                    @endphp
+                                    @foreach ($bulanList as $bulan)
+                                        <th class="border px-2 py-2 text-center">{{ $bulan }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @php
+                                    $konversiHuruf = [0 => 'E', 1 => 'D', 2 => 'C', 3 => 'B', 4 => 'A'];
+                                    $grouped = $santri->nilais->groupBy('tahun');
+                                @endphp
 
+                                @foreach ($grouped as $tahun => $nilais)
+                                    <tr>
+                                        <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                        </td>
+                                        @for ($i = 1; $i <= 12; $i++)
+                                            @php
+                                                $nilaiBulan = $nilais->firstWhere('bulan', $i);
+                                            @endphp
+                                            <td class="border px-2 py-2 text-center">
+                                                @if ($nilaiBulan && isset($nilaiBulan->akhlak))
+                                                    {{ $konversiHuruf[$nilaiBulan->akhlak] ?? '-' }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                        @endfor
+                                    </tr>
+                                @endforeach
+                            </tbody>
 
+                        </table>
+                    </div>
+                </div>
+            @endif
 
+            @if ($errors->any())
+                <div class="text-red-500">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
         </div>
+
         <div class="mt-2 flex items-center justify-end gap-x-6">
             <a href="/dashboard/santri"
                 class=" mt-6 mb-1 w-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-5 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 text-sm leading-6">
@@ -375,13 +846,13 @@
 
     </form>
     <script>
-        function tambahDropdown() {
+        function tambahDropdownPayment() {
             const container = document.getElementById('dropdown-container');
 
             // Ambil bulan, tahun dan status pembayaran terakhir yang ada
-            const allBulan = container.querySelectorAll('select[name="bulan[]"]');
-            const allTahun = container.querySelectorAll('select[name="tahun[]"]');
-            const allStatus = container.querySelectorAll('select[name="status_spp[]"]');
+            const allBulan = container.querySelectorAll('select[name="bulanPayment[]"]');
+            const allTahun = container.querySelectorAll('select[name="tahunPayment[]"]');
+            const allStatus = container.querySelectorAll('select[name="status_sppPayment[]"]');
 
             const lastBulan = allBulan[allBulan.length - 1]?.value || '';
             const lastTahun = allTahun[allTahun.length - 1]?.value || '';
@@ -413,29 +884,29 @@
 
             row.innerHTML = `
             <div class="col-span-2 my-2">
-                <select name="bulan[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-indigo-600">
+                <select name="bulanPayment[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
                     ${bulanOptions}
                 </select>
             </div>
             <div class="col-span-2 my-2">
-                <select name="tahun[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-indigo-600">
+                <select name="tahunPayment[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
                     ${tahunOptions}
                 </select>
             </div>
             <div class="col-span-2 my-2">
-                <select name="status[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-indigo-600">
+                <select name="statusPayment[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
                     ${statusOptions}
                 </select>
             </div>
             <div class="flex">
                 <div class="w-full mx-2 my-2">
-                    <button type="button" onclick="tambahDropdown()"
+                    <button type="button" onclick="tambahDropdownPayment()"
                         class="rounded-md w-full bg-green-500 px-3 py-2 text-white font-semibold shadow-sm hover:bg-green-400">
                         +
                     </button>
                 </div>
                 <div class="w-full mx-2 my-2">
-                    <button type="button" onclick="hapusDropdown(this)"
+                    <button type="button" onclick="hapusDropdownPayment(this)"
                         class="rounded-md w-full bg-red-500 px-3 py-2 text-white font-semibold shadow-sm hover:bg-red-400">
                         -
                     </button>
@@ -447,9 +918,9 @@
 
             // Setelah ditambahkan, set nilai default sesuai baris sebelumnya
             setTimeout(() => {
-                const bulanSelects = row.querySelectorAll('select[name="bulan[]"]');
-                const tahunSelects = row.querySelectorAll('select[name="tahun[]"]');
-                const statusSelects = row.querySelectorAll('select[name="status_spp[]"]');
+                const bulanSelects = row.querySelectorAll('select[name="bulanPayment[]"]');
+                const tahunSelects = row.querySelectorAll('select[name="tahunPayment[]"]');
+                const statusSelects = row.querySelectorAll('select[name="status_sppPayment[]"]');
 
                 if (bulanSelects[0] && lastBulan) bulanSelects[0].value = lastBulan;
                 if (tahunSelects[0] && lastTahun) tahunSelects[0].value = lastTahun;
@@ -457,12 +928,139 @@
             }, 0);
         }
 
-        function hapusDropdown(button) {
+        function hapusDropdownPayment(button) {
             button.closest('.grid').remove();
         }
 
-        function resetDropdown() {
+        function resetDropdownPayment() {
             const container = document.getElementById('dropdown-container');
+            const allRows = container.querySelectorAll('.grid');
+
+            // Sisakan hanya baris pertama, hapus lainnya
+            allRows.forEach((row, index) => {
+                if (index === 0) {
+                    // Kosongkan nilai-nilai dropdown di baris pertama
+                    const selects = row.querySelectorAll('select');
+                    selects.forEach(select => {
+                        select.value = '';
+                    });
+                } else {
+                    // Hapus baris tambahan
+                    row.remove();
+                }
+            });
+        }
+
+        function tambahDropdownNilai() {
+            const container = document.getElementById('dropdown-containerNilai');
+
+            // Ambil bulan, tahun dan status pembayaran terakhir yang ada
+            const allBulanNilai = container.querySelectorAll('select[name="bulanNilai[]"]');
+            const allTahunNilai = container.querySelectorAll('select[name="tahunNilai[]"]');
+            const allPerkembangan = container.querySelectorAll('select[name="perkembangan[]"]');
+            const allAkhlak = container.querySelectorAll('select[name="akhlak[]"]');
+
+            const lastBulanNilai = allBulanNilai[allBulanNilai.length - 1]?.value || '';
+            const lastTahunNilai = allTahunNilai[allTahunNilai.length - 1]?.value || '';
+            const lastPerkembangan = allPerkembangan[allPerkembangan.length - 1]?.value || '';
+            const lastAkhlak = allAkhlak[allAkhlak.length - 1]?.value || '';
+
+            // Array bulan dalam bahasa Indonesia
+            const bulanIndonesia = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+
+            const bulanOptions = bulanIndonesia.map((bulan, index) => {
+                return `<option value="${index + 1}" ${lastBulanNilai == (index + 1) ? 'selected' : ''}>${bulan}</option>`;
+            }).join('');
+
+            const tahunOptions = `
+            @foreach (range(date('Y'), date('Y') + 5) as $thn)
+                <option value="{{ $thn }}">{{ $thn }}</option>
+            @endforeach
+        `;
+
+            const perkembanganOptions = `
+            <option value="">-- Perkembangan --</option>
+            <option value="4" >A. Sangat Baik</option>
+            <option value="3" >B. Baik</option>
+            <option value="2" >C. Cukup</option>
+            <option value="1" >D. Kurang</option>
+            <option value="0" >E. Sangat Kurang</option>
+        `;
+
+            const akhlakOptions = `
+            <option value="">-- Akhlak --</option>
+            <option value="4" >A. Sangat Baik</option>
+            <option value="3" >B. Baik</option>
+            <option value="2" >C. Cukup</option>
+            <option value="1" >D. Kurang</option>
+            <option value="0" >E. Sangat Kurang</option>
+        `;
+
+            const row = document.createElement('div');
+            row.className = 'grid grid-cols-1 sm:grid-cols-7 gap-x-4 items-center';
+
+            row.innerHTML = `
+            <div class="col-span-1 my-2">
+                <select name="bulanNilai[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                    ${bulanOptions}
+                </select>
+            </div>
+            <div class="col-span-1 my-2">
+                <select name="tahunNilai[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                    ${tahunOptions}
+                </select>
+            </div>
+            <div class="col-span-2 my-2">
+                <select name="perkembangan[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                    ${perkembanganOptions}
+                </select>
+            </div>
+            <div class="col-span-2 my-2">
+                <select name="akhlak[]" class="w-full rounded-md border-0 py-1.5 text-gray-900 ring-1 ring-gray-300 focus:ring-lime-600">
+                    ${akhlakOptions}
+                </select>
+            </div>
+            <div class="flex">
+                <div class="w-full mx-2 my-2">
+                    <button type="button" onclick="tambahDropdownNilai()"
+                        class="rounded-md w-full bg-green-500 px-3 py-2 text-white font-semibold shadow-sm hover:bg-green-400">
+                        +
+                    </button>
+                </div>
+                <div class="w-full mx-2 my-2">
+                    <button type="button" onclick="hapusDropdownNilai(this)"
+                        class="rounded-md w-full bg-red-500 px-3 py-2 text-white font-semibold shadow-sm hover:bg-red-400">
+                        -
+                    </button>
+                </div>
+            </div>
+        `;
+
+            container.appendChild(row);
+
+            // Setelah ditambahkan, set nilai default sesuai baris sebelumnya
+            setTimeout(() => {
+                const bulanNilaiSelects = row.querySelectorAll('select[name="bulanNilai[]"]');
+                const tahunNilaiSelects = row.querySelectorAll('select[name="tahunNilai[]"]');
+                const perkembanganSelects = row.querySelectorAll('select[name="perkembangan[]"]');
+                const akhlakSelects = row.querySelectorAll('select[name="akhlak[]"]');
+
+                if (bulanNilaiSelects[0] && lastBulanNilai) bulanNilaiSelects[0].value = lastBulanNilai;
+                if (tahunNilaiSelects[0] && lastTahunNilai) tahunNilaiSelects[0].value = lastTahunNilai;
+                if (perkembanganSelects[0] && lastPerkembangan) perkembanganSelects[0].value = lastPerkembangan;
+                if (akhlakSelects[0] && lastAkhlak) akhlakSelects[0].value = lastAkhlak;
+            }, 0);
+        }
+
+        function hapusDropdownNilai(button) {
+            button.closest('.grid').remove();
+        }
+
+        function resetDropdownNilai() {
+            const container = document.getElementById('dropdown-containerNilai');
             const allRows = container.querySelectorAll('.grid');
 
             // Sisakan hanya baris pertama, hapus lainnya

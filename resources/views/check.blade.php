@@ -29,94 +29,140 @@
                 </button>
             </div>
         </form>
-
-
-        @isset($santri)
-            <div class="grid justify-center items-center">
-                <div class="w-fit px-5 py-5 rounded-lg shadow-md">
-                    <h1
-                        class="mb-1 w-full text-center text-3xl tracking-wide font-bold text-white bg-blue-500 px-2 py-2 rounded-lg shadow-inner">
-                        {{ Request::path() == 'status_spp' ? 'STATUS SPP' : (Request::path() == 'status_kelas' ? 'PERKEMBANGAN SANTRI' : '') }}
-                    </h1>
-
-                    <table class="flex justify-center text-lg">
-                        <tr>
-                            <td>Nama</td>
-                            <td class="px-1">:</td>
-                            <td>{{ $santri->nama }}</td>
-                        </tr>
-                        <tr>
-                            <td>NIS</td>
-                            <td class="px-1">:</td>
-                            <td>{{ $santri->nis }}</td>
-                        </tr>
-                        @if (Request::path() != 'status_spp')
+        @if (session()->has('error'))
+            <h1
+                class=" mb-1 w-full text-center text-2xl tracking-wide font-bold text-white bg-red-500 px-2 py-2 rounded-lg shadow-inner">
+                MAAF DATA SANTRI TIDAK DITEMUKAN, SEGERA HUBUNGI USTADZ</h1>
+        @else
+            @php
+                $date = \Carbon\Carbon::now()->locale('id');
+            @endphp
+            @isset($santri)
+                <div class="grid justify-center items-center">
+                    <div class="w-fit px-2 py-5 rounded-lg shadow-md">
+                        <h1
+                            class="mb-1 w-full text-center text-sm md:text-lg tracking-wide font-bold text-white bg-blue-500 px-2 py-2 rounded-lg shadow-inner">
+                            {{ Request::path() == 'status_spp' ? 'STATUS SPP' : (Request::path() == 'status_kelas' ? 'PERKEMBANGAN SANTRI' : '') }}
+                        </h1>
+                        <table class="table-auto w-full text-sm md:text-lg">
                             <tr>
-                                <td>Tempat, Tanggal Lahir</td>
+                                <td class="whitespace-nowrap">Nama</td>
+                                <td class="px-1">:</td>
+                                <td class="">{{ $santri->nama }}</td>
+                            </tr>
+                            <tr>
+                                <td class="whitespace-nowrap">NIS</td>
+                                <td class="px-1">:</td>
+                                <td class="">{{ $santri->nis }}</td>
+                            </tr>
+                            {{-- @if (Request::path() != 'status_spp')
+                                <tr>
+                                    <td class="whitespace-nowrap">TTL</td>
+                                    <td class="px-1">:</td>
+                                    <td class="">
+                                        {{ $santri->tempat_lahir }},
+                                        {{ \Carbon\Carbon::parse($santri->tanggal_lahir)->translatedFormat('d F Y') }}
+                                    </td>
+                                </tr>
+                            @endif --}}
+                            <tr>
+                                <td class="whitespace-nowrap">Kelas</td>
                                 <td class="px-1">:</td>
                                 <td>
-                                    {{ $santri->tempat_lahir }},
-                                    {{ \Carbon\Carbon::parse($santri->tanggal_lahir)->translatedFormat('d F Y') }}
+                                    @if (strpos($santri->kelas, 'Tahsin') === false)
+                                        Tahfidz
+                                    @endif
+                                    {{ $santri->kelas }}
                                 </td>
                             </tr>
-                        @endif
-                        <tr>
-                            <td>Kelas</td>
-                            <td class="px-1">:</td>
-                            <td>
-                                @if (strpos($santri->kelas, 'Tahsin') === false)
-                                    Tahfidz
-                                @endif
-                                {{ $santri->kelas }}
-                            </td>
-                        </tr>
-                        @if (Request::path() == 'status_spp')
-                            <tr>
+                            @if (Request::path() != 'status_spp')
+                                <tr >
+                                    <td class="whitespace-nowrap">Pengajar</td>
+                                    <td class="px-1">:</td>
+                                    <td class="">
+                                        {{ $santri->pembimbing?->name ?? 'Belum ada data' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="whitespace-nowrap">Hafalan</td>
+                                    <td class="px-1">:</td>
+                                    <td class="">
+                                        {{ $nilaiSekarang->hafalan ?? 'Belum ada data' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="pt-5" colspan="3">Penilaian Bulan {{ $date->translatedFormat('F') }}
+                                    </td>
+                                </tr>
+
                                 @php
-                                    $date = \Carbon\Carbon::now()->locale('id'); // Pastikan menambahkan namespace// Setel locale ke bahasa Indonesia
+                                    $nilaiList = [
+                                        0 => 'Sangat Kurang',
+                                        1 => 'Kurang',
+                                        2 => 'Cukup',
+                                        3 => 'Baik',
+                                        4 => 'Sangat Baik',
+                                    ];
                                 @endphp
-                                <td>Status SPP {{ $date->translatedFormat('F') }}</td>
-                                <td class="px-1">:</td>
-                                <td>
-                                    <div
-                                        class="w-fit inline-flex justify-center items-center rounded-md px-2 font-semibold text-white shadow-sm {{ $santri->status_spp ? 'bg-green-500 ' : 'bg-red-500 ' }}">
-                                        {{ $santri->status_spp ? 'Lunas' : 'Belum Lunas' }}
-                                    </div>
-                                </td>
-                            </tr>
-                        @endif
-                        @if (Request::path() == 'status_kelas')
-                            @if ($santri->kelas == 'Tahsin Awwal')
                                 <tr>
-                                    <td>Materi Bacaan</td>
+                                    <td class="whitespace-nowrap">Progres </td>
                                     <td class="px-1">:</td>
-                                    <td>Iqro 1 s/d Iqro 3</td>
+                                    <td class="">
+                                        {{ isset($nilaiSekarang->perkembangan) ? $nilaiList[$nilaiSekarang->perkembangan] : 'Belum ada data' }}
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <td>Materi Hafalan Bacaan Sholat</td>
+                                    <td class="whitespace-nowrap">Akhlak</td>
                                     <td class="px-1">:</td>
-                                    <td>Niat Wudhu s/d Bacaan Itidal (BPIS)</td>
-                                </tr>
-                            @elseif ($santri->kelas == 'Tahsin Akhir')
-                                <tr>
-                                    <td>Materi Bacaan</td>
-                                    <td class="px-1">:</td>
-                                    <td>Iqro 4 s/d Iqro 6</td>
-                                </tr>
-                                <tr>
-                                    <td>Materi Hafalan Bacaan Sholat</td>
-                                    <td class="px-1">:</td>
-                                    <td>Qunut s/d Takhiyat Akhir (BPIS)</td>
+                                    <td class="">
+                                        {{ isset($nilaiSekarang->akhlak) ? $nilaiList[$nilaiSekarang->akhlak] : 'Belum ada data' }}
+                                    </td>
                                 </tr>
                             @endif
-                            <tr>
-                                <td>Materi Hafalan AlQuran</td>
-                                <td class="px-1">:</td>
-                                <td>{{ $materi }}</td>
-                            </tr>
-                        @endif
-                    </table>
-                    {{-- <ul class="p-3 space-y-1 list-disc list-inside text-lg text-justify">
+                            @if (Request::path() == 'status_spp')
+                                <tr>
+                                    <td>Status SPP {{ $date->translatedFormat('F') }}</td>
+                                    <td class="px-1">:</td>
+                                    <td>
+                                        <div
+                                            class="w-fit inline-flex justify-center items-center rounded-md px-2 font-semibold text-white shadow-sm {{ $santri->status_spp ? 'bg-green-500 ' : 'bg-red-500 ' }}">
+                                            {{ $santri->status_spp ? 'Lunas' : 'Belum Lunas' }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endif
+                            @if (Request::path() == 'status_kelas')
+                                @if ($santri->kelas == 'Tahsin Awwal')
+                                    <tr>
+                                        <td>Materi Bacaan</td>
+                                        <td class="px-1">:</td>
+                                        <td>Iqro 1 s/d Iqro 3</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Materi Hafalan Bacaan Sholat</td>
+                                        <td class="px-1">:</td>
+                                        <td>Niat Wudhu s/d Bacaan Itidal (BPIS)</td>
+                                    </tr>
+                                @elseif ($santri->kelas == 'Tahsin Akhir')
+                                    <tr>
+                                        <td>Materi Bacaan</td>
+                                        <td class="px-1">:</td>
+                                        <td>Iqro 4 s/d Iqro 6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Materi Hafalan Bacaan Sholat</td>
+                                        <td class="px-1">:</td>
+                                        <td>Qunut s/d Takhiyat Akhir (BPIS)</td>
+                                    </tr>
+                                @endif
+                                <tr>
+                                    <td>Materi Hafalan AlQuran</td>
+                                    <td class="px-1">:</td>
+                                    <td>{{ $materi }}</td>
+                                </tr>
+                            @endif
+                        </table>
+                        {{-- <ul class="p-3 space-y-1 list-disc list-inside text-lg text-justify">
                         <li>Nama : {{ $santri->nama }}</li>
                         <li>NIS : {{ $santri->nis }}</li>
                         <li>Kelas : {{ $santri->kelas }}</li>
@@ -138,16 +184,12 @@
                             <li>Materi Hafalan AlQuran : {{ $materi }}</li>
                         @endif
                     </ul> --}}
+                    </div>
                 </div>
-            </div>
-        @endisset
-
-
-        @if (session()->has('error'))
-            <h1
-                class=" mb-1 w-full text-center text-2xl tracking-wide font-bold text-white bg-red-500 px-2 py-2 rounded-lg shadow-inner">
-                MAAF DATA SANTRI TIDAK DITEMUKAN, SEGERA HUBUNGI USTADZ</h1>
+            @endisset
         @endif
+
+
 
     </div>
 

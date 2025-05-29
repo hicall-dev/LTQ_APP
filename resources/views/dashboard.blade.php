@@ -28,36 +28,33 @@
 
     <h1 class=" mb-1 text-5xl tracking-tight font-bold text-gray-900">{{ $judul }}</h1>
     <div class=" my-9 mx-auto flex flex-wrap justify-end items-center">
-        {{-- <div>
-            <button data-modal-target="reset-modal" data-modal-toggle="reset-modal"
-                class=" mt-6 mb-1 w-fit h-fit inline-flex justify-center items-center rounded-md bg-red-500 px-3 py-2 font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-                type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="-ml-0.5 mr-1.5 size-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d=" M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374
-        1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12
-        15.75h.007v.008H12v-.008Z" />
+        @if (auth()->user()->role == 0)
+            <a href="/dashboard/promo"
+                class=" mt-6 mb-1 mx-2 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="-ml-0.5 mr-1.5 size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                 </svg>
-                Reset SPP
-            </button>
-        </div> --}}
-        <a href="/dashboard/promo"
-            class=" mt-6 mb-1 mx-2 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                class="-ml-0.5 mr-1.5 size-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m8.99 14.993 6-6m6 3.001c0 1.268-.63 2.39-1.593 3.069a3.746 3.746 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043 3.745 3.745 0 0 1-3.068 1.593c-1.268 0-2.39-.63-3.068-1.593a3.745 3.745 0 0 1-3.296-1.043 3.746 3.746 0 0 1-1.043-3.297 3.746 3.746 0 0 1-1.593-3.068c0-1.268.63-2.39 1.593-3.068a3.746 3.746 0 0 1 1.043-3.297 3.745 3.745 0 0 1 3.296-1.042 3.745 3.745 0 0 1 3.068-1.594c1.268 0 2.39.63 3.068 1.593a3.745 3.745 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.297 3.746 3.746 0 0 1 1.593 3.068ZM9.74 9.743h.008v.007H9.74v-.007Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm4.125 4.5h.008v.008h-.008v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-            </svg>
-            PROMO
-        </a>
-        <a href="/dashboard/santri/create"
-            class=" mt-6 mb-1 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
-            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                class="-ml-0.5 mr-1.5 size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d=" M12 4.5v15m7.5-7.5h-15">
-            </svg>
-            Tambah Santri
-        </a>
+                Banner
+            </a>
+            <a href="/dashboard/register"
+                class=" mt-6 mb-1 mx-2 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="-ml-0.5 mr-1.5 size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d=" M12 4.5v15m7.5-7.5h-15">
+                </svg>
+                Tambah Pembimbing
+            </a>
+            <a href="/dashboard/santri/create"
+                class=" mt-6 mb-1 mx-2 w-fit h-fit inline-flex justify-center items-center rounded-md bg-blue-600 px-3 py-2  font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600">
+                <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                    class="-ml-0.5 mr-1.5 size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d=" M12 4.5v15m7.5-7.5h-15">
+                </svg>
+                Tambah Santri
+            </a>
+        @endif
     </div>
 
     {{-- PENCARIAN --}}
@@ -78,33 +75,35 @@
                 </svg>
             </button>
         </div>
-
-        <div class=" justify-center">
-            <div class="flex flex-wrap justify-center items-center rounded-md">
-                <button
-                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    type="sumbit" onclick="setSearchValue('Putra Sore')">Putra Sore ({{ $putrasore }})</button>
-                <button
-                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 v font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    type="sumbit" onclick="setSearchValue('Putra Malam')">Putra Malam ({{ $putramalam }})</button>
-                <button
-                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    type="sumbit" onclick="setSearchValue('Putri Pagi')">Putri Pagi ({{ $putripagi }})</button>
-                <button
-                    class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
-                    type="submit" onclick="setSearchValue('Putri Sore')">Putri Sore ({{ $putrisore }})</button>
-                <input type="hidden" name="spp" id="spp">
-                <button
-                    class="w-fit mx-2 rounded-md bg-green-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
-                    type="submit" onclick="setSearchSPP(1)">Lunas ({{ $lunas }})</button>
-                <button
-                    class="w-fit mx-2 rounded-md bg-red-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
-                    type="sumbit" onclick="setSearchSPP(0)">Belum Lunas ({{ $belumlunas }})</button>
-                <button
-                    class="w-fit mx-2 rounded-md bg-green-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
-                    type="submit" onclick="setSearchSPP(2)">Gratis ({{ $gratis }})</button>
+        @if (auth()->user()->role == 0)
+            <div class=" justify-center">
+                <div class="flex flex-wrap justify-center items-center rounded-md">
+                    <button
+                        class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        type="sumbit" onclick="setSearchValue('Putra Sore')">Putra Sore ({{ $putrasore }})</button>
+                    <button
+                        class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 v font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        type="sumbit" onclick="setSearchValue('Putra Malam')">Putra Malam
+                        ({{ $putramalam }})</button>
+                    <button
+                        class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        type="sumbit" onclick="setSearchValue('Putri Pagi')">Putri Pagi ({{ $putripagi }})</button>
+                    <button
+                        class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+                        type="submit" onclick="setSearchValue('Putri Sore')">Putri Sore ({{ $putrisore }})</button>
+                    <input type="hidden" name="spp" id="spp">
+                    <button
+                        class="w-fit mx-2 rounded-md bg-green-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                        type="submit" onclick="setSearchSPP(1)">Lunas ({{ $lunas }})</button>
+                    <button
+                        class="w-fit mx-2 rounded-md bg-red-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-500"
+                        type="sumbit" onclick="setSearchSPP(0)">Belum Lunas ({{ $belumlunas }})</button>
+                    <button
+                        class="w-fit mx-2 rounded-md bg-green-500 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-green-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-500"
+                        type="submit" onclick="setSearchSPP(2)">Gratis ({{ $gratis }})</button>
+                </div>
             </div>
-        </div>
+        @endif
     </form>
     {{ $santri->links() }}
 
@@ -116,8 +115,11 @@
                     <th class=" px-3 py-3">Nama</th>
                     <th class=" px-3 py-3">NIS</th>
                     <th class=" px-3 py-3">Kelas</th>
+                    <th class=" px-3 py-3">Pembimbing</th>
                     <th class=" px-3 py-3">Golongan</th>
-                    <th class=" px-3 py-3">SPP</th>
+                    @if (auth()->user()->role == 0)
+                        <th class=" px-3 py-3">SPP</th>
+                    @endif
                     <th class=" px-3 py-3">Aksi</th>
                 </tr>
             </thead>
@@ -127,22 +129,27 @@
                         <td class=" py-3 bg-gray-50 dark:bg-gray-200"> {{ $santri->nama }} </td>
                         <td class=" py-3"> {{ $santri->nis }} </td>
                         <td class=" py-3 bg-gray-50 dark:bg-gray-200"> {{ $santri->kelas }} </td>
-                        <td class=" py-3"> {{ $santri->golongan }} </td>
-                        <td class=" py-3 bg-gray-50 dark:bg-gray-200">
-                            <div
-                                class="w-fit inline-flex justify-center items-center rounded-md py-2 px-2 font-semibold text-white shadow-sm {{ $santri->status_spp ? 'bg-green-500 ' : 'bg-red-500 ' }}">
-                                @if ($santri->status_spp == null)
-                                    Belum Lunas
-                                @elseif ($santri->status_spp == 0)
-                                    Belum Lunas
-                                @elseif ($santri->status_spp == 1)
-                                    Lunas
-                                @elseif ($santri->status_spp == 2)
-                                    Gratis
-                                @endif
-                            </div>
+                        <td class=" py-3 "> {{ $santri->pembimbing?->name ?? 'Belum Ada' }}
                         </td>
-                        <td class=" py-3 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 sm:gap-1 md:gap-0 lg:gap-0">
+                        <td class=" py-3 bg-gray-50 dark:bg-gray-200"> {{ $santri->golongan }} </td>
+                        @if (auth()->user()->role == 0)
+                            <td class=" py-3 ">
+                                <div
+                                    class="w-fit inline-flex justify-center items-center rounded-md py-2 px-2 font-semibold text-white shadow-sm {{ $santri->status_spp ? 'bg-green-500 ' : 'bg-red-500 ' }}">
+                                    @if ($santri->status_spp == null)
+                                        Belum Lunas
+                                    @elseif ($santri->status_spp == 0)
+                                        Belum Lunas
+                                    @elseif ($santri->status_spp == 1)
+                                        Lunas
+                                    @elseif ($santri->status_spp == 2)
+                                        Gratis
+                                    @endif
+                                </div>
+                            </td>
+                        @endif
+                        <td
+                            class=" justify-center py-3 grid lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-1 sm:gap-1 md:gap-0 lg:gap-0">
                             <div>
                                 <a href="/dashboard/santri/{{ $santri->nis }}/edit"
                                     class=" w-4/5 inline-flex justify-center items-center rounded-md bg-blue-600 py-2 px-2 font-semibold text-white shadow-sm focus:ring-blue-200 hover:bg-blue-500 focus-visible:outline-blue-600">
@@ -163,17 +170,19 @@
                                     </svg>
                                 </a>
                             </div>
-                            <div>
-                                <button type="button"
-                                    class=" w-4/5 inline-flex justify-center items-center rounded-md bg-red-500 py-2 px-2 font-semibold text-white shadow-sm  hover:bg-red-400 focus-visible:outline-red-500"
-                                    onclick="openModal('modelDelete')">
-                                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                        class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                    </svg>
-                                </button>
-                            </div>
+                            @if (auth()->user()->role == 0)
+                                <div>
+                                    <button type="button"
+                                        class=" w-4/5 inline-flex justify-center items-center rounded-md bg-red-500 py-2 px-2 font-semibold text-white shadow-sm  hover:bg-red-400 focus-visible:outline-red-500"
+                                        onclick="openModal('modelDelete')">
+                                        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                            stroke="currentColor" class="size-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            @endif
                         </td>
                     </tr>
             </tbody>
