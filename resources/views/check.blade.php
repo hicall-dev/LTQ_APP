@@ -36,6 +36,7 @@
         @else
             @php
                 $date = \Carbon\Carbon::now()->locale('id');
+                $bulanLalu = $date->copy()->subMonth();
             @endphp
             @isset($santri)
                 <div class="grid justify-center items-center">
@@ -84,24 +85,24 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="whitespace-nowrap">Hafalan</td>
+                                    <td class="whitespace-nowrap">Materi akhir {{ $bulanLalu->translatedFormat('F') }}</td>
                                     <td class="px-1">:</td>
                                     <td class="">
                                         {{ $nilaiSekarang->hafalan ?? 'Belum ada data' }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="pt-5" colspan="3">Penilaian Bulan {{ $date->translatedFormat('F') }}
+                                    <td class="pt-5" colspan="3">Penilaian Bulan {{ $bulanLalu->translatedFormat('F') }}
                                     </td>
                                 </tr>
 
                                 @php
                                     $nilaiList = [
-                                        0 => 'Sangat Kurang',
-                                        1 => 'Kurang',
-                                        2 => 'Cukup',
-                                        3 => 'Baik',
-                                        4 => 'Sangat Baik',
+                                        0 => 'E) Sangat Kurang',
+                                        1 => 'D) Kurang',
+                                        2 => 'C) Cukup',
+                                        3 => 'B) Baik',
+                                        4 => 'A) Sangat Baik',
                                     ];
                                 @endphp
                                 <tr>

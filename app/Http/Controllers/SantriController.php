@@ -136,10 +136,12 @@ class SantriController extends Controller
 
         // Cek apakah santri ditemukan
         if ($santri) {
+            $bulanLalu = now()->subMonth(); // Mendapatkan bulan sebelumnya secara otomatis
             $nilaiSekarang = $santri->nilais()
-                ->where('bulan', now()->month)
-                ->where('tahun', now()->year)
+                ->where('bulan', $bulanLalu->month)
+                ->where('tahun', $bulanLalu->year)
                 ->first();
+
             $materi = isset($materiHafalan[$santri->kelas]) ? $materiHafalan[$santri->kelas] : null;
             return view('check', compact('santri', 'title', 'materi', 'nilaiSekarang'));
         } else {
