@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('santris', function (Blueprint $table) {
-            $table->text('tempat_lahir')->nullable();
-        });
+        // Schema::table('santris', function (Blueprint $table) {
+        //     // $table->text('tempat_lahir')->nullable();
+        // });
     }
 
 
@@ -22,8 +22,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('santris', function (Blueprint $table) {
-            $table->dropColumn('tempat_lahir');
-        });
+        // Schema::table('santris', function (Blueprint $table) {
+        //     $table->dropColumn('tempat_lahir');
+        // });
     }
 };

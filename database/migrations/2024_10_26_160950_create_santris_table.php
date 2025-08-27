@@ -11,21 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('santris', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama');
-            $table->integer('nis')->unique();
-            $table->string('kelas')->default('Tahfidz');
-            $table->boolean('status_spp')->default(false);
-            $table->string('golongan');
-            // $table->unsignedBigInteger('operator_id');
-            // $table->foreign('operator_id')->references('id')->on('users');
-            $table->foreignId('operator_id')->constrained(
-                table: 'users',
-                indexName: 'santris_operator_id'
-            );
-            $table->timestamps();
-        });
+        // Schema::create('santris', function (Blueprint $table) {
+        //     // $table->id();
+        //     // $table->string('nama');
+        //     // $table->integer('nis')->unique();
+        //     // $table->string('kelas')->default('Tahfidz');
+        //     // $table->boolean('status_spp')->default(false);
+        //     // $table->string('golongan');
+        //     // // $table->unsignedBigInteger('operator_id');
+        //     // // $table->foreign('operator_id')->references('id')->on('users');
+        //     // $table->foreignId('operator_id')->constrained(
+        //     //     table: 'users',
+        //     //     indexName: 'santris_operator_id'
+        //     // );
+        //     // $table->timestamps();
+        // });
     }
 
     /**
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('santris');
+        // Schema::dropIfExists('santris');
     }
 };

@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SantriController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\DashboardSantriController;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -124,4 +125,8 @@ Route::post('/dashboard/reset-password', [RegisterController::class, 'resetPassw
 Route::delete('/dashboard/reset-password/{user}', [RegisterController::class, 'destroy'])->middleware('auth');
 Route::fallback(function () {
     return redirect('/');
+});
+
+Route::middleware(['auth'])->group(function() {
+    Route::resource('/penilaian', PenilaianController::class);
 });

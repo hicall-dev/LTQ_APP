@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payments', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('santri_id')->constrained('santris')->onDelete('cascade');
-            $table->unsignedTinyInteger('bulan'); // 1 - 12
-            $table->unsignedSmallInteger('tahun'); // Contoh: 2025
-            $table->unsignedTinyInteger('status')->default(0); // 0 = belum, 1 = lunas, 2 = gratis
-            $table->timestamps();
-            $table->foreignId('operator_id')->constrained(
-                table: 'users',
-                indexName: 'payments_operator_id'
-            );
-            $table->unique(['santri_id', 'bulan', 'tahun']); // Hindari duplikat data
-        });
+        // Schema::create('payments', function (Blueprint $table) {
+        //     // $table->id();
+        //     // $table->foreignId('santri_id')->constrained('santris')->onDelete('cascade');
+        //     // $table->unsignedTinyInteger('bulan'); // 1 - 12
+        //     // $table->unsignedSmallInteger('tahun'); // Contoh: 2025
+        //     // $table->unsignedTinyInteger('status')->default(0); // 0 = belum, 1 = lunas, 2 = gratis
+        //     // $table->timestamps();
+        //     // $table->foreignId('operator_id')->constrained(
+        //     //     table: 'users',
+        //     //     indexName: 'payments_operator_id'
+        //     // );
+        //     // $table->unique(['santri_id', 'bulan', 'tahun']); // Hindari duplikat data
+        // });
     }
 
     /**
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('payments');
+        // Schema::dropIfExists('payments');
     }
 };

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Nilai;
 use App\Models\Santri;
 use App\Models\Payment;
+use App\Models\Setoran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -107,6 +108,10 @@ class DashboardSantriController extends Controller
     public function show(Santri $santri)
     {
         $user = $santri->operator;
+        $setorans = $santri->setorans()
+            ->orderBy('tahun', 'desc')
+            ->orderBy('bulan', 'desc')
+            ->get();
         return view(
             'detail',
             [
@@ -114,6 +119,7 @@ class DashboardSantriController extends Controller
                 'judul' => 'Detail Santri',
                 'santri' => $santri,
                 'user' => $user,
+                'setorans' => $setorans,
                 // 'payments' => $payments,
                 // 'nilais' => $nilais
             ]
@@ -130,6 +136,10 @@ class DashboardSantriController extends Controller
             ->where('bulan', now()->month)
             ->where('tahun', now()->year)
             ->first();
+        $setorans = $santri->setorans()
+            ->orderBy('tahun', 'desc')
+            ->orderBy('bulan', 'desc')
+            ->get();
         $pembimbing = User::where('role', 1)->get();
         return view(
             'form',
@@ -140,6 +150,7 @@ class DashboardSantriController extends Controller
                 'user' => $user,
                 'pembimbing' => $pembimbing,
                 'nilaiSekarang' => $nilaiSekarang,  // <-- kirim ke view
+                'setorans' => $setorans,
             ]
         );
     }
@@ -272,6 +283,16 @@ class DashboardSantriController extends Controller
                                 'perkembangan' => $request->perkembangan,
                                 'akhlak' => $request->akhlak,
                                 'operator_id' => auth('web')->id(),
+                            ]
+                        );
+                        Setoran::updateOrCreate(
+                            [
+                                'santri_id' => $santri->id,
+                                'bulan' => $bulan,
+                                'tahun' => $tahun,
+                            ],
+                            [
+                                'hafalan' => $request->hafalan,
                             ]
                         );
                         $nilai->touch();

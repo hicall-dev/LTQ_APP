@@ -164,6 +164,34 @@
                 </div>
 
                 <div>
+                    <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Hafalan</h1>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border px-2 py-2 text-center">Tanggal Dibuat</th>
+                                    <th class="border px-2 py-2 text-center">Setoran</th>
+                                    <th class="border px-2 py-2 text-center">Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($setorans as $setoran)
+                                    <tr>
+                                        <td class="border px-2 py-2 text-center">{{ formatDateTime($setoran->created_at) }}</td>
+                                        <td class="border px-2 py-2 text-center">{{ $setoran->hafalan }}</td>
+                                        <td class="border px-2 py-2 text-center">{{ config('bulan.' . $setoran->bulan) }} {{ $setoran->tahun }}</td>
+                                    </tr>
+                                @empty
+                                    <td class="border px-2 py-2 text-center" colspan="3">Belum Ada Data Setoran</td>
+                                @endforelse
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
+
+                <div>
                     <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Nilai Perkembangan</h1>
                     <div class="overflow-x-auto">
                         <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
@@ -196,7 +224,7 @@
                                     $konversiHuruf = [0 => 'E', 1 => 'D', 2 => 'C', 3 => 'B', 4 => 'A'];
                                     $grouped = $santri->nilais->groupBy('tahun');
                                 @endphp
-                            
+
                                 @foreach ($grouped as $tahun => $nilais)
                                     <tr>
                                         <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}</td>
@@ -215,7 +243,7 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            
+
                         </table>
                     </div>
 
@@ -254,7 +282,7 @@
                                     $konversiHuruf = [0 => 'E', 1 => 'D', 2 => 'C', 3 => 'B', 4 => 'A'];
                                     $grouped = $santri->nilais->groupBy('tahun');
                                 @endphp
-                            
+
                                 @foreach ($grouped as $tahun => $nilais)
                                     <tr>
                                         <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}</td>
@@ -273,13 +301,40 @@
                                     </tr>
                                 @endforeach
                             </tbody>
-                            
+
                         </table>
                     </div>
 
                 </div>
-                
+
                 @else
+                <div>
+                    <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Hafalan</h1>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
+                            <thead>
+                                <tr class="bg-gray-100">
+                                    <th class="border px-2 py-2 text-center">Tanggal Dibuat</th>
+                                    <th class="border px-2 py-2 text-center">Setoran</th>
+                                    <th class="border px-2 py-2 text-center">Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($setorans as $setoran)
+                                    <tr>
+                                        <td class="border px-2 py-2 text-center">{{ formatDateTime($setoran->created_at) }}</td>
+                                        <td class="border px-2 py-2 text-center">{{ $setoran->hafalan }}</td>
+                                        <td class="border px-2 py-2 text-center">{{ config('bulan.' . $setoran->bulan) }} {{ $setoran->tahun }}</td>
+                                    </tr>
+                                @empty
+                                    <td class="border px-2 py-2 text-center" colspan="3">Belum Ada Data Setoran</td>
+                                @endforelse
+                            </tbody>
+
+                        </table>
+                    </div>
+
+                </div>
                 <div>
                     <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Nilai Perkembangan</h1>
                     <div class="overflow-x-auto">

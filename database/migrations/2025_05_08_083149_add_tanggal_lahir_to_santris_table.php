@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('santris', function (Blueprint $table) {
-            $table->date('tanggal_lahir')->nullable()->after('nis');
-        });
+        // Schema::table('santris', function (Blueprint $table) {
+        //     // $table->date('tanggal_lahir')->nullable()->after('nis');
+        // });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('santris', function (Blueprint $table) {
-            $table->dropColumn('tanggal_lahir');
-        });
+        // Schema::table('santris', function (Blueprint $table) {
+        //     // $table->dropColumn('tanggal_lahir');
+        // });
     }
 };

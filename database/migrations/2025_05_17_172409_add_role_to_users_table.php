@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('role')->default('0'); // atau bisa gunakan enum jika ingin
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     $table->string('role')->default('0'); // atau bisa gunakan enum jika ingin
+        // });
     }
 
     /**
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
+        // Schema::table('users', function (Blueprint $table) {
+        //     //
+        // });
     }
 };
