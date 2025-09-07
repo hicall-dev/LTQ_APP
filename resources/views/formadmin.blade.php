@@ -90,6 +90,20 @@
                     </label>
                 </div>
                 <input type="hidden" name="old_username" value="{{ isset($admin) ? $admin->username : '' }}">
+
+                <div class="col-span-3">
+                    <label for="phone" class="block font-medium leading-6 text-gray-900">No. Telepon /  WA</label>
+                    <div class="mt-2">
+                        <input
+                            type="tel" name="phone" id="phone"
+                            maxlength="17"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                            placeholder="Masukkan nomor telepon"
+                            class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600  leading-6"
+                            required value="{{ isset($admin) ? $admin->phone : '' }}">
+                    </div>
+                </div>
+
                 <div class="col-span-3">
                     <label for="password" class="block font-medium leading-6 text-gray-900">Password</label>
                     <div class="mt-2">

@@ -81,6 +81,14 @@
         </div>
         @if (auth()->user()->role == 0)
             <div class=" justify-center">
+                <div class="grid grid-cols-2 gap-6 my-6">
+                    <div class="rounded-full text-center bg-blue-50 text-blue-700 p-4 font-semibold">
+                        Total Santri Putra: {{ $totalputra }}
+                    </div>
+                    <div class="rounded-full text-center bg-red-50 text-red-700 p-4 font-semibold">
+                        Total Santri Putri: {{ $totalputri }}
+                    </div>
+                </div>
                 <div class="flex flex-wrap justify-center items-center rounded-md">
                     <button
                         class="w-fit mx-2 rounded-md bg-blue-600 px-3 py-2 my-2 font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"

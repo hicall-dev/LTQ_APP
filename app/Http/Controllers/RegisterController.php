@@ -57,6 +57,7 @@ class RegisterController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|max:255',
             //'email' => 'nullable',
+            'phone' => 'required',
             'username' => 'required|min:5|max:255|unique:users',
             'password' => 'required|min:5|max:255',
             'role' => 'required'
@@ -87,6 +88,7 @@ class RegisterController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
+            'phone' => 'required',
             'username' => 'required|min:5|max:255',
             'password' => 'nullable|max:255',
             'old_username' => 'nullable'
@@ -101,7 +103,7 @@ class RegisterController extends Controller
 
         // Update name
         $user->name = $validatedData['name'];
-
+        $user->phone = $validatedData['phone'];
 
         // Update password hanya jika diisi
         if (!empty($validatedData['password'])) {

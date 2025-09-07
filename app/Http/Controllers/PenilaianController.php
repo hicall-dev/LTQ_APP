@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Nilai;
 use App\Models\Santri;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PenilaianController extends Controller
@@ -17,34 +18,42 @@ class PenilaianController extends Controller
         $title = 'Penilaian';
         $currentYear = now()->year;
         $currentMonth = now()->month;
-        // Jika dari 2025, start dari bulan mei
-        $months = $currentYear == 2025 ? range(5, $currentMonth) : range(1, $currentMonth);
 
-        $santris = Santri::with(
-            ['nilais', 'pembimbing']
-        )
-        ->searchByNilai()
-        ->orderBy('nis')
-        ->get();
+        // Jika dari 2025, start dari bulan september
+        $months = $currentYear == 2025 ? range(9, $currentMonth) : range(1, $currentMonth);
+
+        $asatidzs = User::with('membimbing.nilais')->where('role', 1)->get();
 
         $results = [];
 
-        foreach($santris as $santri) {
-            /// Ambil bulan yang sudah dinilai
-            $doneNilaiByMonth = $santri->nilais->pluck('bulan')->toArray();
+        foreach ($asatidzs as $asatidz) {
+            $ustadzData = (object) [
+                'ustadz_id'   => $asatidz->id,
+                'ustadz_name' => $asatidz->name,
+                'phone' => $asatidz->phone,
+                'total_santri' => count($asatidz->membimbing),
+                'santris'     => [],
+            ];
 
-            /// Ambil bulan yang belum dari bulan 5
-            $diffMonth = collect(array_diff($months, $doneNilaiByMonth))
-                    ->map(fn($month) => config('bulan.' . $month))
-                    ->values();
+            foreach ($asatidz->membimbing as $santri) {
+                $bulanSudahDinilai = $santri->nilais
+                    ->where('tahun', $currentYear)
+                    ->pluck('bulan')
+                    ->toArray();
 
-            if (!empty($diffMonth)) {
-                $results[] = (object) [
-                    'santri' => $santri,
-                    'belum_dinilai' => $diffMonth,
-                ];
+                // Dapatkan bulan yang belum dinilai dari sekarang, di tahun ini
+                $bulanBelumDinilai = array_diff($months, $bulanSudahDinilai);
+
+                if (!empty($bulanBelumDinilai)) {
+                    $ustadzData->santris[] = (object) [
+                        'nis' => $santri->nis,
+                        'name' => $santri->nama,
+                        'belum_dinilai' => array_values($bulanBelumDinilai),
+                    ];
+                }
             }
 
+            $results[] = $ustadzData;
         }
 
         return view(

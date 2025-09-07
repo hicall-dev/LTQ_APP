@@ -20,6 +20,13 @@ class DashboardSantriController extends Controller
      */
     public function index()
     {
+        $putrasore = Santri::where('golongan', 'Putra Sore')->count();
+        $putramalam = Santri::where('golongan', 'Putra Malam')->count();
+        $totalPutra = $putrasore + $putramalam;
+
+        $putripagi = Santri::where('golongan', 'Putri Pagi')->count();
+        $putrisore = Santri::where('golongan', 'Putri Sore')->count();
+        $totalPutri = $putripagi + $putrisore;
         return view(
             'dashboard',
             [
@@ -34,10 +41,12 @@ class DashboardSantriController extends Controller
                     ->paginate(500),
 
                 // Data jumlah per golongan
-                'putrasore' => Santri::where('golongan', 'Putra Sore')->count(),
-                'putramalam' => Santri::where('golongan', 'Putra Malam')->count(),
-                'putripagi' => Santri::where('golongan', 'Putri Pagi')->count(),
-                'putrisore' => Santri::where('golongan', 'Putri Sore')->count(),
+                'putrasore' => $putrasore,
+                'putramalam' => $putramalam,
+                'totalputra' => $totalPutra,
+                'putripagi' => $putripagi,
+                'putrisore' => $putrisore,
+                'totalputri' => $totalPutri,
 
                 // Data jumlah per status SPP
                 'lunas' => Santri::where('status_spp', 1)->count(),

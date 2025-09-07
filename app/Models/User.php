@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->hasMany(Santri::class, 'operator_id');
     }
 
+    public function membimbing(): HasMany
+    {
+        return $this->hasMany(Santri::class, 'pembimbing_id', 'id');
+    }
+
     public function getRouteKeyName()
     {
         return 'username';
