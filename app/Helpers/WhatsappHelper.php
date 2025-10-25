@@ -20,7 +20,7 @@ class WhatsappHelper
         return $header . "\n\n" . $listSantri;
     }
 
-    public static function messageWaliSantri(string $namaSantri, ?string $bulan, ?string $tahun)
+    public static function messageWaliSantri(string $namaSantri, string $nisSantri, ?string $bulan, ?string $tahun)
     {
         $bulan = $bulan ?? now()->month;
         $tahun = $tahun ?? now()->year;
@@ -31,11 +31,20 @@ class WhatsappHelper
 
             Sehubungan akan berakhirnya bulan $namaBulan $tahun
 
-            *Kami hanya mengingatkan*
+            *Kami hanya mengingatkan..!*
 
-            Menurut catatan bendahara lembaga kami, anak Bapak/Ibu $namaSantri belum melunasi SPP pada bulan $namaBulan $tahun
+            Menurut catatan bendahara lembaga kami, bahwa anak Bapak/Ibu:
+            Nama: $namaSantri
+            NIS: $nisSantri
 
-            Mohon kerjasamanya, tunggakan tersebut segera diselesaikan.
+            belum melunasi SPP $namaBulan $tahun
+
+            Silahkan cek spp anak di website resmi lembaga :
+            https://ltq-khoirunnasyien.com/cek_spp#cek
+
+            Mohon kerjasamanya, tunggakan tersebut agar segera diselesaikan.
+
+            Pembayaran bisa via transfer : Rek Bank BSI 7117245448 AN : Fahmi Ramdani
 
             Atas kerjasamanya, terima kasih
 

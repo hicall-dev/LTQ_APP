@@ -124,7 +124,7 @@
                                 @php
                                     $bulan = now()->month;
                                     $tahun = now()->year;
-                                    $message = urlencode(\App\Helpers\WhatsappHelper::messageWaliSantri($santri->nama, $bulan, $tahun));
+                                    $message = urlencode(\App\Helpers\WhatsappHelper::messageWaliSantri($santri->nama, $santri->nis, $bulan, $tahun));
                                     $phone = $santri->phone;
                                     if ($phone && $phone[0] == '0') {
                                         $phone = str_replace('0', '62', $phone);
