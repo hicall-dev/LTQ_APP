@@ -93,12 +93,51 @@
                                 class="block w-full  px-3 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600  leading-6">
                         </div>
                     </div>
+                    <div class="col-span-3">
+                        <label for="phone" class="block font-medium leading-6 text-gray-900">No. Telepon / WA</label>
+                        <div class="mt-2">
+                            <input type="tel" name="phone" id="phone" readonly maxlength="17"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                placeholder="Masukkan nomor telepon"
+                                class="block px-3 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-lime-600  leading-6"
+                                required value="{{ isset($santri) ? $santri->phone : '' }}">
+                        </div>
+                    </div>
                 </div>
             </div>
             @if (auth()->user()->role == 0)
                 <div>
                     @if ($santri->status_spp != 2)
                         <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Pembayaran SPP</h1>
+                        @if (!$alreadyPaidThisMonth)
+                        <div id="alert-unpaid"
+                            class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 border border-red-300"
+                            role="alert">
+                            <svg class="flex-shrink-0 w-4 h-4" aria-hidden="true" fill="currentColor"
+                                viewBox="0 0 20 20">
+                                <path
+                                    d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+                            </svg>
+                            <div class="ms-3 text-sm">
+                                <span class="font-semibold">Pemberitahuan</span>
+                                <div>Santri ini belum melakukan pembayaran di bulan ini. Harap hubungi wali santri nya.</div>
+                                @php
+                                    $bulan = now()->month;
+                                    $tahun = now()->year;
+                                    $message = urlencode(\App\Helpers\WhatsappHelper::messageWaliSantri($santri->nama, $bulan, $tahun));
+                                    $phone = $santri->phone;
+                                    if ($phone && $phone[0] == '0') {
+                                        $phone = str_replace('0', '62', $phone);
+                                    }
+                                @endphp
+                                <a href="https://wa.me/{{ $phone }}?text={{ $message }}" target="_blank"
+                                    class="mt-4 inline-flex items-center gap-2 text-sm font-medium rounded-xl bg-green-500 text-white px-3 py-2 hover:bg-green-600 transition">
+                                    <x-icons.whatsapp class="h-4 w-4" />
+                                    Ingatkan via WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                        @endif
                         <div class="overflow-x-auto">
                             <table class="min-w-full bg-white border border-gray-300 text-sm text-gray-800">
                                 <thead>
@@ -158,7 +197,8 @@
                             </table>
                         </div>
                     @else
-                        <h1 class=" text-sm text-gray-500 italic mt-4">Santri Santri ini bebas dari kewajiban pembayaran
+                        <h1 class=" text-sm text-gray-500 italic mt-4">Santri Santri ini bebas dari kewajiban
+                            pembayaran
                             SPP.</h1>
                     @endif
                 </div>
@@ -177,12 +217,15 @@
                             <tbody>
                                 @forelse ($setorans as $setoran)
                                     <tr>
-                                        <td class="border px-2 py-2 text-center">{{ formatDateTime($setoran->created_at) }}</td>
+                                        <td class="border px-2 py-2 text-center">
+                                            {{ formatDateTime($setoran->created_at) }}</td>
                                         <td class="border px-2 py-2 text-center">{{ $setoran->hafalan }}</td>
-                                        <td class="border px-2 py-2 text-center">{{ config('bulan.' . $setoran->bulan) }} {{ $setoran->tahun }}</td>
+                                        <td class="border px-2 py-2 text-center">
+                                            {{ config('bulan.' . $setoran->bulan) }} {{ $setoran->tahun }}</td>
                                     </tr>
                                 @empty
-                                    <td class="border px-2 py-2 text-center" colspan="3">Belum Ada Data Setoran</td>
+                                    <td class="border px-2 py-2 text-center" colspan="3">Belum Ada Data Setoran
+                                    </td>
                                 @endforelse
                             </tbody>
 
@@ -227,7 +270,8 @@
 
                                 @foreach ($grouped as $tahun => $nilais)
                                     <tr>
-                                        <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}</td>
+                                        <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                        </td>
                                         @for ($i = 1; $i <= 12; $i++)
                                             @php
                                                 $nilaiBulan = $nilais->firstWhere('bulan', $i);
@@ -285,7 +329,8 @@
 
                                 @foreach ($grouped as $tahun => $nilais)
                                     <tr>
-                                        <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}</td>
+                                        <td class="border px-2 py-2 text-center font-semibold">{{ $tahun }}
+                                        </td>
                                         @for ($i = 1; $i <= 12; $i++)
                                             @php
                                                 $nilaiBulan = $nilais->firstWhere('bulan', $i);
@@ -306,8 +351,7 @@
                     </div>
 
                 </div>
-
-                @else
+            @else
                 <div>
                     <h1 class=" mb-5 text-md tracking-tight font-bold text-gray-900">Riwayat Hafalan</h1>
                     <div class="overflow-x-auto">
@@ -322,12 +366,15 @@
                             <tbody>
                                 @forelse ($setorans as $setoran)
                                     <tr>
-                                        <td class="border px-2 py-2 text-center">{{ formatDateTime($setoran->created_at) }}</td>
+                                        <td class="border px-2 py-2 text-center">
+                                            {{ formatDateTime($setoran->created_at) }}</td>
                                         <td class="border px-2 py-2 text-center">{{ $setoran->hafalan }}</td>
-                                        <td class="border px-2 py-2 text-center">{{ config('bulan.' . $setoran->bulan) }} {{ $setoran->tahun }}</td>
+                                        <td class="border px-2 py-2 text-center">
+                                            {{ config('bulan.' . $setoran->bulan) }} {{ $setoran->tahun }}</td>
                                     </tr>
                                 @empty
-                                    <td class="border px-2 py-2 text-center" colspan="3">Belum Ada Data Setoran</td>
+                                    <td class="border px-2 py-2 text-center" colspan="3">Belum Ada Data Setoran
+                                    </td>
                                 @endforelse
                             </tbody>
 
