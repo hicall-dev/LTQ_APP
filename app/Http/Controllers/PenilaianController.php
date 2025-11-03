@@ -19,9 +19,6 @@ class PenilaianController extends Controller
         $currentYear = now()->year;
         $currentMonth = now()->month;
 
-        // Jika dari 2025, start dari bulan september
-        $months = $currentYear == 2025 ? range(9, $currentMonth) : range(1, $currentMonth);
-
         $asatidzs = User::with('membimbing.nilais')->where('role', 1)->get();
 
         $results = [];
@@ -40,6 +37,21 @@ class PenilaianController extends Controller
                     ->where('tahun', $currentYear)
                     ->pluck('bulan')
                     ->toArray();
+
+                // Kalo santri masuk nya itu sebelum bulan 9 2025 (alias fitur ini dibuat), maka penilaian hanya dihitung pada saat bulan 9 2025
+                // Kalo santri masuk setelahnya, maka penilaian dihitung dari saat dia masuk
+                $tahunMasukSantri = $santri->created_at->year;
+                $bulanMasukSantri = $santri->created_at->month;
+                if ($tahunMasukSantri < 2025 || ($tahunMasukSantri == 2025 && $bulanMasukSantri < 9)) {
+                    $startMonth = 9;
+                    $startYear = 2025;
+                } else {
+                    $startMonth = $bulanMasukSantri;
+                    $startYear = $tahunMasukSantri;
+                }
+
+                // Sementara ini abaikan tahun dulu hehe
+                $months = $currentYear == 2025 ? range($startMonth, $currentMonth) : range(1, $currentMonth);
 
                 // Dapatkan bulan yang belum dinilai dari sekarang, di tahun ini
                 $bulanBelumDinilai = array_diff($months, $bulanSudahDinilai);
