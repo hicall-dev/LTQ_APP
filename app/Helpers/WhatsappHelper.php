@@ -6,16 +6,15 @@ class WhatsappHelper
 {
     public static function messageSantri(string $ustadz, array $santri)
     {
-        $header = "Assalamu'alaikum, $ustadz. Sekedar mengingatkan berikut santri-santri yang belum diberikan penilaian:";
-        $listSantri = "";
         $currentYear = now()->year;
+        $currentMonth = now()->month;
+        $namaBulan = config('bulan.' . $currentMonth);
+        $header = "Assalamu'alaikum, $ustadz. Sekedar mengingatkan berikut santri-santri yang belum diberikan penilaian di bulan $namaBulan $currentYear :";
+        $listSantri = "";
 
         foreach ($santri as $i => $s) {
-            foreach ($s->belum_dinilai as $blm) {
-                $no = $i + 1;
-                $monthName = config('bulan.' . $blm);
-                $listSantri .= "{$no}. {$s->name} ({$s->nis}) - {$monthName} {$currentYear} \n";
-            }
+            $no = $i + 1;
+            $listSantri .= "{$no}. {$s->name} ({$s->nis}) \n";
         }
         return $header . "\n\n" . $listSantri;
     }
