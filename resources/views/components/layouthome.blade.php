@@ -16,8 +16,8 @@
 <x-navbarhome></x-navbarhome>
 
 <body class="bg-cyan-200">
-    <div class=" min-h-screen">
-        <main>
+    <div class="flex flex-col min-h-screen">
+        <main class="flex-grow">
             {{-- BANNER --}}
             <picture class="">
                 <source media="(min-width: 768px)" srcset="{{ asset('img/banner2.jpg') }}">
