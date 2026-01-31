@@ -297,6 +297,28 @@
                             </div>
                         @endif
 
+                        @if (Request::path() != 'status_spp' && isset($santri->pembimbing) && !empty($santri->pembimbing->phone))
+                            @php
+                                $pembimbingName = $santri->pembimbing->name;
+                                $santriName = $santri->nama;
+                                $waMessage = "Assalamu'alaikum $pembimbingName, saya wali $santriName ingin.....";
+                                $waMessageEncoded = urlencode($waMessage);
+                                $pembimbingPhone = $santri->pembimbing->phone;
+                                
+                                if ($pembimbingPhone && $pembimbingPhone[0] == '0') {
+                                    $pembimbingPhone = '62' . substr($pembimbingPhone, 1);
+                                }
+                            @endphp
+                            
+                            <div class="flex justify-center pt-8 border-t border-slate-100 mt-2">
+                                <a href="https://wa.me/{{ $pembimbingPhone }}?text={{ $waMessageEncoded }}" target="_blank"
+                                    class="inline-flex items-center gap-2 text-sm font-bold rounded-xl bg-green-500 text-white px-6 py-3 hover:bg-green-600 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                    <x-icons.whatsapp class="w-5 h-5" />
+                                    Konsultasi dengan Pembimbing
+                                </a>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             @endisset
